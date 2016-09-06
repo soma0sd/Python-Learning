@@ -3,11 +3,8 @@
 Created on 2016-09-06
 
 @ Author: soma0sd
-
 @ Path: GUI/01_animation.py
-
 @ Disc: 캔버스에서 애니메이션 구동
-
 @ License: MIT
 """
 from tkinter import Tk, Canvas

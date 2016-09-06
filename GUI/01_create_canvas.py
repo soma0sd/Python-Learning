@@ -3,11 +3,8 @@
 Created on 2016-09-06
 
 @ Author: soma0sd
-
 @ Path: GUI/01_create_canvas.py
-
 @ Disc: 캔버스 만들어보기
-
 @ License: MIT
 """
 from tkinter import Tk, Canvas, mainloop
