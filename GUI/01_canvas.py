@@ -26,7 +26,7 @@ w.pack()
 """
 w.create_rectangle(
     0, 0,
-    w.winfo_screenwidth(), w.winfo_screenheight(),
+    150, 180,
     fill="#cc651d"
     )
 w.create_rectangle(

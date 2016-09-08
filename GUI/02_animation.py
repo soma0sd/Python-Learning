@@ -19,11 +19,9 @@ can.create_rectangle(0, 0, 400, 200, fill="#ffffff")
 """
 원 그리기
 """
-ovals = []
 for x in range(20):
     for y in range(10):
-        obj = can.create_oval(x*20, y*20, (x+1)*20, (y+1)*20)
-        ovals.append(obj)
+        can.create_oval(x*20, y*20, (x+1)*20, (y+1)*20)
 """
 움직일 선을 그리면서 초기위치정보 저장
 """
@@ -35,10 +33,10 @@ for x in range(20):
         r = 10
         bx = (x+0.5)*20
         by = (y+0.5)*20
-        position.append((bx, by, r, theta))
         mx = r * np.cos(theta)
         my = r * np.sin(theta)
-        obj = can.create_line(bx, by, bx+mx, by+my)
+        obj = can.create_line(bx, by, bx+mx, by-my)
+        position.append((bx, by, r, theta))
         lines.append(obj)
 can.pack()
 
@@ -52,14 +50,14 @@ def animation():
     while True:  # 프로그램 종료시까지 루프
         time.sleep(0.025)  # 0.025초 만큼 정지
         for i in range(len(lines)):
-            ix, iy, r, theta = position[i]
+            bx, by, r, theta = position[i]
             theta += (1/30)*2*np.pi
             mx = r * np.cos(theta)
             my = r * np.sin(theta)
             can.delete(lines[i])  # 기존라인 삭제
-            lines[i] = can.create_line(ix, iy, ix+mx, iy+my)
+            lines[i] = can.create_line(bx, by, bx+mx, by-my)
             # 새로운 라인 생성
-            position[i] = (ix, iy, r, theta)
+            position[i] = (bx, by, r, theta)
             # 새로운 라인 위치정보 저장
         can.update()  # 캔버스 업데이트
 
