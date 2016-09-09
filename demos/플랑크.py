@@ -27,6 +27,12 @@ def plot(T, color):
     pot.plot(wave*1E9, data, c=color, label=T)
 
 
+def gen_color(lenth):
+    gap = int(255/lenth)
+    greens = [hex(i).replace("0x", "") for i in range(0, 255, gap)]
+    colors = ["#FF{}00".format(i.upper()) for i in greens]
+    return colors
+
 imgurl = requests.get("https://github.com/soma0sd/python-study/raw/master/demos/img01.png")
 with open("img.png", "wb") as f:
     f.write(imgurl.content)
@@ -35,16 +41,15 @@ plt = mpl.pyplot
 fig = plt.figure()
 fig.figimage(img, resize=True)
 pot = fig.add_subplot(111)
-pot.patch.set_alpha(0.1)
+pot.patch.set_alpha(0.5)
 
 #plt.semilogy()
 #plt.semilogx()
 
-plot(1000, "#FF0000")
-plot(3000, "#FF3300")
-plot(5000, "#FF6600")
-plot(10000, "#FF9900")
-plot(30000, "#FFBB00")
+colors = gen_color(15)
+for i in range(100, 1500, 100):
+    plot(i, colors[int(i/100)])
+
 
 plt.title("Planck's law", fontsize=15)
 plt.xlabel("Wave Lenth [nm]", fontsize=12)
