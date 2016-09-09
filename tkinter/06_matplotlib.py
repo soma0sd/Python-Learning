@@ -16,27 +16,31 @@ Created on 2016-09-08
 5) "Using matplotlib backend: TkAgg"메시지 확인
 5) 다른 종류의 백엔드라면 %matplotlib tk 명령
 """
-# import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
+from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
 import numpy.random as random
 
 
 def generate():
-    global frame2, hist
+    global frame2, hist, sub, fig, randset
+    bins = mu+sigma*random.randn(100)
+    print(type(sub))
+    randset = list(randset) + list(bins)
+    hist = sub.hist(randset, 50)
+    fig.canvas.draw()
 
+
+mu, sigma = 100, 10
 master = tk.Tk()
 frame1 = tk.Frame(master, width=100, height=300)
 frame2 = tk.Frame(master, width=300, height=300)
 frame1.pack(side='left')
 frame2.pack()
 
-mu, sigma = 100, 10
-fig = Figure()
-plt = fig.add_subplot(111)
+fig, sub = plt.subplots(1, 1)
 randset = mu + sigma*random.randn(100)
-hist = plt.hist(randset, 50)
+hist = sub.hist(randset, 50)
 canvas = FigureCanvasTkAgg(fig, master=frame2)
 canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
