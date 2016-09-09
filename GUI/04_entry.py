@@ -19,7 +19,7 @@ def random_walk():
     global run, obj, can, pos, result
     while run:
         pos += 2
-        if pos >= 299:  # 화면 끝에 도달하면 정지
+        if pos >= 301:  # 화면 끝에 도달하면 정지
             pos = 0
             for o in obj:  # 도달한 오브젝트들의 y값을 도수분포표로 출력하는 루프
                 x = can.coords(o)[1]+1
@@ -32,7 +32,7 @@ def random_walk():
             print(result)
             break
         for o in obj:  # 각요소가 [dx, yy] 만큼 움직이도록 루프
-            can.move(o, 2, random.randint(5)-2)
+            can.move(o, 2, random.random()*10-5)
         can.update()  # 캔버스 업데이트
 
 
@@ -56,6 +56,16 @@ def stop():
     global run, can
     run = False
 
+
+def reset():
+    """
+    직전 오브젝트 삭제, 초기화
+    """
+    global run, pos, obj, can
+    run = False
+    pos = 0
+    for i in range(len(obj)):
+        can.delete(obj[i])
 
 """
 본문
@@ -82,7 +92,7 @@ can.pack()
 member = StringVar()
 member.set(100)
 entry = Entry(frame_menu, textvariable=member)
-entry.grid(row=0, column=1, columnspan=2, sticky=W)
+entry.grid(row=2, column=3, columnspan=2, sticky=W)
 # columnspan: 열1과 열2에 걸쳐서 레이아웃
 
 """
@@ -91,7 +101,9 @@ entry.grid(row=0, column=1, columnspan=2, sticky=W)
 """
 btn_go = Button(frame_menu, text="go", command=go)
 btn_stop = Button(frame_menu, text="stop", command=stop)
-btn_go.grid(row=1, column=1, sticky=W+E)
-btn_stop.grid(row=1, column=2, sticky=W+E)
+btn_reset = Button(frame_menu, text="reset", command=reset)
+btn_go.grid(row=4, column=3, sticky=W+E)
+btn_stop.grid(row=4, column=4, sticky=W+E)
+btn_reset.grid(row=5, column=3, columnspan=2, sticky=W+E)
 
 master.mainloop()

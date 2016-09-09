@@ -9,7 +9,7 @@ Created on 2016-09-08
 from numpy import random
 from numpy import sqrt
 
-lim = 10000
+lim = 50000
 gap = 1000
 
 i = 1

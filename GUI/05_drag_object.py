@@ -43,25 +43,25 @@ def web():
     1/r 법칙에 따름
     """
     global can, line1, line2, obj
-    ratio = 500
+    ratio = 300
     while True:
         cx = can.coords(obj)[0]+10
         cy = can.coords(obj)[1]+10
-        for y in range(0, 500, 10):
-            posx = ()
-            posy = ()
+        for y in range(0, 500, 50):
+            pos1 = ()
+            pos2 = ()
             for x in range(0, 501, 10):
                 r = np.sqrt((x-cx)**2+(y-cy)**2)
                 if r == 0:
                     m = ratio
                 else:
                     m = ratio / r
-                posx += (x, y-m)
-                posy += (x, y)
+                pos1 += (x, y)
+                pos2 += (x, y-m)
             can.delete(line1[int(y/50)])
             can.delete(line2[int(y/50)])
-            line1[int(y/50)] = [can.create_line(posy, fill='#000')]
-            line2[int(y/50)] = [can.create_line(posx, fill='#f00',
+            line1[int(y/50)] = [can.create_line(pos1, fill='#000')]
+            line2[int(y/50)] = [can.create_line(pos2, fill='#f00',
                                 dash=(3, 2))]
         can.update()
 
