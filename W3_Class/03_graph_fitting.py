@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on 2016-09-09
+Created on 2016-09-12
 
 @ Author: soma0sd
-@ Disc: fitting한 그래프를 적분한다
+@ Disc: 그래프의 polynomial fitting
 @ License: MIT
 
 """
@@ -44,6 +44,6 @@ fit9 = np.poly1d(np.polyfit(years, tempr, 9))
 """
 PLOT
 """
-plt.plot(years, tempr,':g',
+plt.plot(years, tempr, ':g',
          fitsp, fit1(fitsp), "--r",
          fitsp, fit9(fitsp), "--k")

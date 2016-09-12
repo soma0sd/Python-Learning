@@ -117,7 +117,8 @@ class excel:
         self._wb.Close()
         self._e.Application.Quit()
 
-"""본문
+"""
+본문
 만든 클래스는 패키지처럼 이용할 수 있다
 """
 e = excel()
