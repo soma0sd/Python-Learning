@@ -44,6 +44,6 @@ fit9 = np.poly1d(np.polyfit(years, tempr, 9))
 """
 PLOT
 """
-plt.plot(years, tempr,'-g',
+plt.plot(years, tempr,':g',
          fitsp, fit1(fitsp), "--r",
-         fitsp, fit9(fitsp), "--b")
+         fitsp, fit9(fitsp), "--k")
