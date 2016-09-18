@@ -25,13 +25,14 @@ def get_data():
     # 각 줄마다 쉼표로 분리해서 2차원 리스트를 만든다
     return (data[2:])[:-2]  # 데이터가 아닌 부분은 슬라이싱
 
-
 """
 연평균기온 데이터
 """
 data = get_data()
 years = [int(row[0]) for row in data]
 tempr = [float(row[13]) for row in data]
+
+
 """
 다항식 fitting - 1차
 """
@@ -44,6 +45,8 @@ fit9 = np.poly1d(np.polyfit(years, tempr, 9))
 """
 PLOT
 """
-plt.plot(years, tempr, ':g',
-         fitsp, fit1(fitsp), "--r",
-         fitsp, fit9(fitsp), "--k")
+plt.figure(figsize=[5, 3])
+raw, = plt.plot(years, tempr, ':g')
+p1, = plt.plot(fitsp, fit1(fitsp), "--r")
+p9, = plt.plot(fitsp, fit9(fitsp), "--k")
+plt.legend([raw, p1, p9], ['rawdata', 'fit1', 'fit9'], bbox_to_anchor=(1, 0.4))
