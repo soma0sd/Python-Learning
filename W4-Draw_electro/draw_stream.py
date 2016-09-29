@@ -70,6 +70,7 @@ class control:
             self.btn.append(bt)
         canvas.bind('<Button-1>', self.B1Action)
         canvas.bind('<B1-Motion>', self.B1Motion)
+        canvas.after(0, self.animation)
 
     def B1Action(self, event):
         # Find active button
@@ -92,6 +93,66 @@ class control:
         obj.delete()
         del self.object[self.object.index(obj)]
         return None
+
+    def animation(self):
+        dr = 3
+        lines = []
+        while True:
+            for li in lines:
+                self.canvas.delete(li)
+            lines = []
+            for o in self.object:
+                chg = o.charge
+                N = np.abs(chg*4)
+                for li in range(N):
+                    theta = np.pi*2*li/N
+                    ix = o.x+o.opt['r']*np.cos(theta)
+                    iy = o.y+o.opt['r']*np.sin(theta)
+                    lines.append(self._draw_stream(ix, iy, dr, theta, o))
+            self.canvas.update()
+
+    def _draw_stream(self, ix, iy, r, theta, obj):
+        x, y = ix+r*np.cos(theta), iy+r*np.sin(theta)
+        crd = [ix, iy, x, y]
+        i = 0
+        while 0 < x < 500 and 50 < y < 500 and self._is_line_crush(x, y):
+            r = np.sqrt((crd[-2]-crd[-4])**2+(crd[-1]-crd[-3])**2)
+            theta = np.arctan2(crd[-1]-crd[-3], crd[-2]-crd[-4])
+            Er, Et = self._CalcE(x, y, obj)
+            nx = r*np.cos(theta)+Er*np.cos(Et)
+            ny = r*np.sin(theta)+Er*np.sin(Et)
+            theta = np.arctan2(ny, nx)
+            x = x+r*np.cos(theta)
+            y = y+r*np.sin(theta)
+            crd += [x, y]
+            i += 1
+        if obj.charge > 0:
+            c = '#F00'
+        else:
+            c = '#00F'
+        return self.canvas.create_line(crd, fill=c)
+
+    def _CalcE(self, x, y, obj):
+        Ex, Ey = 0, 0
+        ratio = 5E3
+        for o in self.object:
+            if obj.charge > 0:
+                k = -1
+            else:
+                k = 1
+            Er = k*ratio*o.charge/((o.x-x)**2+(o.y-y)**2)
+            Et = np.arctan2(o.y-y, o.x-x)
+            Ex += Er*np.cos(Et)
+            Ey += Er*np.sin(Et)
+        Er = np.sqrt(Ex**2+Ey**2)
+        Et = np.arctan2(Ey, Ex)
+        return Er, Et
+
+    def _is_line_crush(self, x, y):
+        for o in self.object:
+            if o.is_crush(x, y):
+                return False
+        return True
 
 
 master = tk.Tk()
