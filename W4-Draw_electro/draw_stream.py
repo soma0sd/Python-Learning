@@ -186,7 +186,7 @@ class control:
         극좌표계 r, t를 출력
         """
         Ex, Ey = 0, 0
-        ratio = 5E3
+        ratio = 8E3
         for o in self.object:
             if obj.charge > 0:
                 k = -1
