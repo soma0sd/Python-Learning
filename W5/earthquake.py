@@ -23,8 +23,10 @@ class geometry(tk.Canvas):
         detector2 = {'N': 2, 'x': xd, 'y': yd*2, 'obj': 0, 't': None}
         detector3 = {'N': 3, 'x': xd*2, 'y': yd*2, 'obj': 0, 't': None}
         self.detector = [detector1, detector2, detector3]
+        self.is_run = True
 
     def earthquake_run(self):
+        self.is_run = True
         t0 = time.time()
         w, h = self.winfo_reqwidth()-4, self.winfo_reqheight()-4
         x = self.epicenter['x'] = np.random.randint(4, w)
@@ -47,7 +49,7 @@ class geometry(tk.Canvas):
             _ = self.create_rectangle(xd-4, yd-4, xd+4, yd+4)
             self.itemconfig(_, fill=c)
             det['obj'] = _
-        while True:
+        while self.is_run:
             rate = time.time()-t0
             _r = self.wave_v*rate
             self.coords(_o, x-_r, y-_r, x+_r, y+_r)
@@ -62,11 +64,12 @@ class geometry(tk.Canvas):
 
 
 def Detector_on(det):
-    global frame2, lab
+    global frame2, lab, d_btns
     name = "Detector {}".format(det['N'])
     btn = tk.Button(frame2, text=name, relief='groove', bg='#000', fg='#FFF')
     btn.config(font=12, command=lambda *a: Detector_calc(det), width=10)
     btn.pack(side='top')
+    d_btns.append(btn)
 
 
 def Detector_calc(det):
@@ -82,6 +85,16 @@ def Detector_calc(det):
     lab.itemconfig(_, outline=c, width=3)
 
 
+def Canvas_Clear():
+    global lab, d_btns
+    lab.is_run = False
+    for det in lab.detector:
+        det['t'] = None
+    for btn in d_btns:
+        btn.destroy()
+    lab.delete('all')
+
+d_btns = []
 master = tk.Tk()
 master.title('Earthquake')
 frame1 = tk.Frame(master, width=400, height=400, bg='#000')
@@ -93,6 +106,6 @@ btn = tk.Button(frame2, text='Run', relief='groove', bg='#000', fg='#FFF')
 btn.config(font=12, command=lab.earthquake_run, width=10)
 btn.pack(side='top')
 btn = tk.Button(frame2, text='Clear', relief='groove', bg='#000', fg='#FFF')
-btn.config(font=12, command=lambda *a: lab.delete('all'), width=10)
+btn.config(font=12, command=Canvas_Clear, width=10)
 btn.pack(side='top')
 master.mainloop()
