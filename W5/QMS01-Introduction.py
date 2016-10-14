@@ -35,7 +35,7 @@ class QMS(tk.Canvas):
         전극 스위치 True는 False로 False는 True로
         """
         self.rod_voltage = not self.rod_voltage
-        if not self.rod_voltage:  # 만약 스위치가 꺼져있다
+        if not self.rod_voltage:  # 만약 스위치가 꺼져있다면
             self.rods['V'] = 0
 
     def create_ion(self):

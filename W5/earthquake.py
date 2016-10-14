@@ -51,7 +51,7 @@ class geometry(tk.Canvas):
         """
         캔버스 좌상단에 지진 발생 이후 경과시간을 표시하는 부분
         """
-        rate = "{:.1f} sec".format(time.time()-self.t0)
+        rate = "{:.1f} sec".format(time.time()-t0)
         rate_txt = self.create_text(2, 2, text=rate, anchor='nw')
         # anchor='nw' 옵션은 문자의 기준점을 북(n)서(w)에 잡겠다는 뜻
         """
@@ -62,7 +62,7 @@ class geometry(tk.Canvas):
                 c = '#00F'
             elif det['N'] == 2:
                 c = '#0FF'
-            else:
+            else:  # N = 3
                 c = '#FF0'
             xd, yd = det['x'], det['y']
             _ = self.create_rectangle(xd-4, yd-4, xd+4, yd+4)
@@ -73,8 +73,11 @@ class geometry(tk.Canvas):
         """
         _o = self.create_oval(x, y, x, y, fill='#FAA')
         self.tag_lower(_o)
+        """
+        애니메이션 구동
+        """
         while self.is_run:
-            rate = time.time()-t0  # 경과시간을 실시간 업데이트
+            rate = time.time()-t0  # 경과시간을 업데이트
             _r = self.wave_v*rate
             self.coords(_o, x-_r, y-_r, x+_r, y+_r)  # 지진파, 시간에 따라 확장
             for d in self.detector:
@@ -98,7 +101,7 @@ def Detector_on(det):
     관측소에서 지진을 관측했을때 작동하는 전역함수
     2번 프레임(메뉴)에 버튼을 생성해서 [d_btns]에 담는다.
     """
-    global frame2, lab, d_btns
+    global frame2, d_btns
     name = "Detector {}".format(det['N'])
     btn = tk.Button(frame2, text=name, relief='groove', bg='#000', fg='#FFF')
     btn.config(font=12, command=lambda *a: Detector_calc(det), width=10)
