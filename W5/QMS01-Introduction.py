@@ -44,18 +44,20 @@ class QMS(tk.Canvas):
         """
         h = self.winfo_reqheight()/2+2
         ind = self.create_oval(0, h-5, 10, h+5, fill='#F00')
-        chg = np.random.randint(1, 4)
-        tid = self.create_text(5, h, text=str(chg), fill='#FFF', font=('', 8))
-        self.ions.append({'Oid': ind, 'Tid': tid, 'chg': chg, 'vy': 0, 'm': 1})
+        m = np.random.randint(1, 10)
+        tid = self.create_text(5, h, text=str(m), fill='#FFF', font=('', 8))
+        self.ions.append({'Oid': ind, 'Tid': tid, 'chg': 1, 'vy': 0, 'm': m})
 
     def move_ion(self, ion, rate):
         """
         이온 이동 함수
         """
         w, h = self.winfo_reqwidth(), self.winfo_reqheight()
+        Vn = self.DC.get()+self.rods['V']
+        Vs = -self.DC.get()-self.rods['V']
         pos = self.coords(ion['Tid'])
-        Fn = 8.99E9*1.602E-7*self.rods['V']*ion['chg']/(pos[1]-30)**2
-        Fs = 8.99E9*1.602E-7*self.rods['V']*ion['chg']/(pos[1]-h-30)**2
+        Fn = 8.99E9*1.602E-7*Vn*ion['chg']/(pos[1]-30)**2
+        Fs = 8.99E9*1.602E-7*Vs*ion['chg']/(pos[1]-h-30)**2
         ion['vy'] += (Fn-Fs)*rate/ion['m']
         self.move(ion['Oid'], self.vx*rate, ion['vy']*rate)
         self.move(ion['Tid'], self.vx*rate, ion['vy']*rate)
@@ -65,12 +67,13 @@ class QMS(tk.Canvas):
             ind = self.ions.index(ion)
             del self.ions[ind]
 
-    def attachs(self, f, v):
+    def attachs(self, f, ac, dc):
         """
         외부 슬라이드바와 실시간 연결
         """
         self.Freq = f
-        self.Volt = v
+        self.AC = ac
+        self.DC = dc
 
     def animations(self):
         """
@@ -81,18 +84,18 @@ class QMS(tk.Canvas):
             td = time.time()-t0
             if self.rod_voltage:
                 fr = self.Freq.get()
-                vo = self.Volt.get()
+                ac = self.AC.get()
                 w = fr/(2*np.pi)
                 if np.cos(w*t0) >= 0:
                     cp = "#{:X}00".format(int(15*np.cos(w*t0)))
                     cn = "#00{:X}".format(int(15*np.cos(w*t0)))
-                    self.rods['V'] = vo*np.cos(w*t0)
+                    self.rods['V'] = ac*np.cos(w*t0)
                     self.itemconfig(self.rods['N'], fill=cp)
                     self.itemconfig(self.rods['S'], fill=cn)
                 else:
                     cp = "#00{:X}".format(int(-15*np.cos(w*t0)))
                     cn = "#{:X}00".format(int(-15*np.cos(w*t0)))
-                    self.rods['V'] = vo*np.cos(w*t0)
+                    self.rods['V'] = ac*np.cos(w*t0)
                     self.itemconfig(self.rods['N'], fill=cp)
                     self.itemconfig(self.rods['S'], fill=cn)
             if len(self.ions) > 0:
@@ -120,27 +123,33 @@ lab = QMS(frame1, width=500, height=150)
 _ = tk.Label(frame2, text='Freq')
 _.config(bg='#000', fg='#FFF')
 _.grid(row=0, column=0)
-_ = tk.Label(frame2, text='Volt')
+_ = tk.Label(frame2, text='AC')
 _.config(bg='#000', fg='#FFF')
 _.grid(row=0, column=1)
+_ = tk.Label(frame2, text='DC')
+_.config(bg='#000', fg='#FFF')
+_.grid(row=0, column=2)
 """
 슬라이드바 생성
 """
 f = tk.Scale(frame2, from_=0, to=100)
 f.config(relief='groove', bg='#000', fg='#FFF')
 f.grid(row=1, column=0)
-v = tk.Scale(frame2, from_=0, to=100)
-v.config(relief='groove', bg='#000', fg='#FFF')
-v.grid(row=1, column=1)
-lab.attachs(f, v)  # 클래스와 연결
+ac = tk.Scale(frame2, from_=1, to=200)
+ac.config(relief='groove', bg='#000', fg='#FFF')
+ac.grid(row=1, column=1)
+dc = tk.Scale(frame2, from_=1, to=200)
+dc.config(relief='groove', bg='#000', fg='#FFF')
+dc.grid(row=1, column=2)
+lab.attachs(f, ac, dc)  # 클래스와 연결
 """
 버튼 생성
 """
 _ = tk.Button(frame2, text='voltage', command=lab.rod_on)
 _.config(relief='groove', bg='#000', fg='#FFF')
-_.grid(row=2, column=0, columnspan=2, sticky='we')
+_.grid(row=2, column=0, columnspan=3, sticky='we')
 _ = tk.Button(frame2, text='ion', command=lab.create_ion)
 _.config(relief='groove', bg='#000', fg='#FFF')
-_.grid(row=3, column=0, columnspan=2, sticky='we')
+_.grid(row=3, column=0, columnspan=3, sticky='we')
 
 master.mainloop()
