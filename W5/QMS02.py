@@ -43,10 +43,14 @@ class QMS:
         self.menu_btn['particle'].config(relief='groove', bg='#000', fg='#FFF')
         self.menu_btn['particle'].config(command=self._cmd_particle)
         self.menu_btn['particle'].grid(row=1, columnspan=2, sticky='we')
+        self.menu_btn['reset'] = tk.Button(self.frame_menu, text='reset')
+        self.menu_btn['reset'].config(relief='groove', bg='#000', fg='#FFF')
+        self.menu_btn['reset'].config(command=self._cmd_reset)
+        self.menu_btn['reset'].grid(row=2, column=0, columnspan=2, sticky='we')
         _ = tk.Label(self.frame_menu, text='', bg='#000', fg='#FFF')
-        _.grid(row=2, column=0, columnspan=2, sticky='we')
-        _ = tk.Label(self.frame_menu, text='Program', bg='#000', fg='#FFF')
         _.grid(row=3, column=0, columnspan=2, sticky='we')
+        _ = tk.Label(self.frame_menu, text='Program', bg='#000', fg='#FFF')
+        _.grid(row=4, column=0, columnspan=2, sticky='we')
         self.menu_btn['DCV'] = tk.StringVar()
         self.menu_btn['ACV'] = tk.StringVar()
         self.menu_btn['Freq'] = tk.StringVar()
@@ -54,20 +58,20 @@ class QMS:
         self.menu_btn['ACV'].set(10)
         self.menu_btn['Freq'].set(3)
         _ = tk.Label(self.frame_menu, text='DCV', bg='#000', fg='#FFF')
-        _.grid(row=4, column=0, sticky='we')
-        _ = tk.Entry(self.frame_menu, width=3)
-        _.config(textvariable=self.menu_btn['DCV'])
-        _.grid(row=4, column=1)
-        _ = tk.Label(self.frame_menu, text='ACV', bg='#000', fg='#FFF')
         _.grid(row=5, column=0, sticky='we')
         _ = tk.Entry(self.frame_menu, width=3)
-        _.config(textvariable=self.menu_btn['ACV'])
+        _.config(textvariable=self.menu_btn['DCV'])
         _.grid(row=5, column=1)
-        _ = tk.Label(self.frame_menu, text='Freq', bg='#000', fg='#FFF')
+        _ = tk.Label(self.frame_menu, text='ACV', bg='#000', fg='#FFF')
         _.grid(row=6, column=0, sticky='we')
         _ = tk.Entry(self.frame_menu, width=3)
-        _.config(textvariable=self.menu_btn['Freq'])
+        _.config(textvariable=self.menu_btn['ACV'])
         _.grid(row=6, column=1)
+        _ = tk.Label(self.frame_menu, text='Freq', bg='#000', fg='#FFF')
+        _.grid(row=7, column=0, sticky='we')
+        _ = tk.Entry(self.frame_menu, width=3)
+        _.config(textvariable=self.menu_btn['Freq'])
+        _.grid(row=7, column=1)
 
     def setup_canvas(self):
         self.rod = {}
@@ -91,9 +95,9 @@ class QMS:
         x = np.random.randint(-3, 3)
         y = np.random.randint(-3, 3)
         m = np.random.randint(1, 20)
-        _ = self.canvas.create_oval(0, 49-x, 4, 53-x, fill='#F00')
+        _ = self.canvas.create_oval(0, 47-x, 8, 55-x, fill='#F00')
         data['Hid'] = _
-        _ = self.canvas.create_oval(0, 149-y, 4, 153-y, fill='#F00')
+        _ = self.canvas.create_oval(0, 147-y, 8, 155-y, fill='#F00')
         data['Lid'] = _
         data['Vy'] = 0
         data['Vz'] = 0
@@ -108,6 +112,19 @@ class QMS:
             self.menu_btn['power'].config(text='Power ON')
             self.voltage = [0, 0]
 
+    def _cmd_reset(self):
+        for h in self.hist:
+            self.canvas.delete(h['id'])
+        self.hist = []
+        for i in range(1, 20):
+            x = 380*i/20
+            data = {}
+            _ = self.canvas.create_rectangle(x-8, 280, x+8, 280, fill='#000')
+            data['id'] = _
+            data['value'] = 0
+            self.hist.append(data)
+            self.canvas.create_text(x, 280, text=i, anchor='n')
+
     def animation(self):
         t0 = time.time()
         while True:
@@ -119,15 +136,15 @@ class QMS:
                 pass
             if self.power:
                 self.voltage[0] = dc+ac*np.cos(w*t0)
-                self.voltage[1] = -dc-ac*np.cos(w*t0)
+                self.voltage[1] = -dc-ac*np.cos(w*t0+np.pi)
             rate = time.time()-t0
             for p in self.particle:
                 codH = self.canvas.coords(p['Hid'])
                 codL = self.canvas.coords(p['Lid'])
                 y = codH[0]+2
                 z = codL[0]+2
-                Ay = self.voltage[0]*((1/(y-30)**2)+(1/(y-70)**2))/p['mass']
-                Az = self.voltage[1]*((1/(z-130)**2)+(1/(z-170)**2))/p['mass']
+                Ay = self.voltage[0]*10*((1/(y-30)**2)+(1/(y-70)**2))/p['mass']
+                Az = self.voltage[1]*10*((1/(z-130)**2)+(1/(z-170)**2))/p['mass']
                 p['Vy'] += Ay*rate
                 p['Vz'] += Az*rate
                 self.canvas.move(p['Hid'], self.Vx*rate, p['Vy']*rate)
