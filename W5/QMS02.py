@@ -11,7 +11,8 @@ import time
 class QMS:
     def __init__(self):
         self.power = False
-        self.Vx = 250
+        self.Vx = 180
+        self.voltage = [0, 0]
         self.particle = []
         self.master = tk.Tk()
         self.master.title('QMS')
@@ -23,9 +24,9 @@ class QMS:
         self.canvas.pack(side='left')
         self.canvas.create_line(0, 100, 400, 100)
         self.canvas.create_line(0, 200, 400, 200)
-        _ = self.canvas.create_text(2, 2, text='High Mass Filter', anchor='nw')
+        _ = self.canvas.create_text(2, 2, text='Low Mass Filter', anchor='nw')
         self.canvas.itemconfig(_, fill='#F00')
-        _ = self.canvas.create_text(2, 102, text='Low Mass Filter')
+        _ = self.canvas.create_text(2, 102, text='High Mass Filter')
         self.canvas.itemconfig(_, fill='#00F', anchor='nw')
         self.frame_menu = tk.Frame(self.master, width=100, bg='#000')
         self.frame_menu.pack(side='top')
@@ -46,9 +47,12 @@ class QMS:
         _.grid(row=2, column=0, columnspan=2, sticky='we')
         _ = tk.Label(self.frame_menu, text='Program', bg='#000', fg='#FFF')
         _.grid(row=3, column=0, columnspan=2, sticky='we')
-        self.menu_btn['DCV'] = tk.IntVar()
-        self.menu_btn['ACV'] = tk.IntVar()
-        self.menu_btn['ACW'] = tk.IntVar()
+        self.menu_btn['DCV'] = tk.StringVar()
+        self.menu_btn['ACV'] = tk.StringVar()
+        self.menu_btn['Freq'] = tk.StringVar()
+        self.menu_btn['DCV'].set(10)
+        self.menu_btn['ACV'].set(10)
+        self.menu_btn['Freq'].set(3)
         _ = tk.Label(self.frame_menu, text='DCV', bg='#000', fg='#FFF')
         _.grid(row=4, column=0, sticky='we')
         _ = tk.Entry(self.frame_menu, width=3)
@@ -59,10 +63,10 @@ class QMS:
         _ = tk.Entry(self.frame_menu, width=3)
         _.config(textvariable=self.menu_btn['ACV'])
         _.grid(row=5, column=1)
-        _ = tk.Label(self.frame_menu, text='ACW', bg='#000', fg='#FFF')
+        _ = tk.Label(self.frame_menu, text='Freq', bg='#000', fg='#FFF')
         _.grid(row=6, column=0, sticky='we')
         _ = tk.Entry(self.frame_menu, width=3)
-        _.config(textvariable=self.menu_btn['ACW'])
+        _.config(textvariable=self.menu_btn['Freq'])
         _.grid(row=6, column=1)
 
     def setup_canvas(self):
@@ -92,6 +96,7 @@ class QMS:
         _ = self.canvas.create_oval(0, 149-y, 4, 153-y, fill='#F00')
         data['Lid'] = _
         data['Vy'] = 0
+        data['Vz'] = 0
         data['mass'] = m
         self.particle.append(data)
 
@@ -101,16 +106,32 @@ class QMS:
             self.menu_btn['power'].config(text='Power OFF')
         else:
             self.menu_btn['power'].config(text='Power ON')
+            self.voltage = [0, 0]
 
     def animation(self):
         t0 = time.time()
         while True:
-            rate = time.time() - t0
+            try:
+                w = float(self.menu_btn['Freq'].get())/(2*np.pi)
+                ac = float(self.menu_btn['ACV'].get())
+                dc = float(self.menu_btn['DCV'].get())
+            except:
+                pass
+            if self.power:
+                self.voltage[0] = dc+ac*np.cos(w*t0)
+                self.voltage[1] = -dc-ac*np.cos(w*t0)
+            rate = time.time()-t0
             for p in self.particle:
-                self.canvas.move(p['Hid'], self.Vx*rate, 0)
-                self.canvas.move(p['Lid'], self.Vx*rate, 0)
                 codH = self.canvas.coords(p['Hid'])
                 codL = self.canvas.coords(p['Lid'])
+                y = codH[0]+2
+                z = codL[0]+2
+                Ay = self.voltage[0]*((1/(y-30)**2)+(1/(y-70)**2))/p['mass']
+                Az = self.voltage[1]*((1/(z-130)**2)+(1/(z-170)**2))/p['mass']
+                p['Vy'] += Ay*rate
+                p['Vz'] += Az*rate
+                self.canvas.move(p['Hid'], self.Vx*rate, p['Vy']*rate)
+                self.canvas.move(p['Lid'], self.Vx*rate, p['Vz']*rate)
                 if codH[0] > 400:
                     self.canvas.delete(p['Hid'])
                     self.canvas.delete(p['Lid'])
