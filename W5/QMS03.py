@@ -2,11 +2,14 @@
 """
 Created on Wed Oct 26 23:22:49 2016
 @author: soma0sd
+
+교류, 직류, 진동수를 조정하여 QMS의 필터효과를 시뮬레이션 한다
 """
 import tkinter as tk
 
 class QMS:
   def __init__(self, **kw):
+    """초기화"""
     # Variables
     self.var = {'ACV': 0, 'DCV': 0 , 'f': 0, 'range': 21, 'E': 10}
     self.result = {}
@@ -23,6 +26,7 @@ class QMS:
     self.master.mainloop()
 
   def frame_menu(self):
+    """메뉴프레임"""
     frame = tk.Frame(self.master, bg='#000')
     frame.pack(side='right', fill='both')
     self._menu_object(frame, 'ACV')
@@ -30,12 +34,13 @@ class QMS:
     self._menu_object(frame, 'f')
 
   def frame_canvas(self):
+    """캔버스 초기화"""
     self.canvas = tk.Canvas(self.master, width=400, height=300)
     self.canvas.pack(side='left')
-    # View
+    # Create View Line
     self.canvas.create_line(0, 100, 400, 100)
     self.canvas.create_line(0, 200, 400, 200)
-    # Axis
+    # Create Axis
     _ = self.canvas.create_line(15, 50, 15, 5, width=2, arrow='last')
     self.canvas.tag_raise(_)
     _ = self.canvas.create_line(14, 50, 65, 50, width=2, arrow='last')
@@ -52,7 +57,7 @@ class QMS:
     self.canvas.tag_raise(_)
     _ = self.canvas.create_text(60, 160, text='z')
     self.canvas.tag_raise(_)
-    # Result View
+    # Create Result View
     h = 380/self.var['range']
     for m in range(1, self.var['range']):
       self.canvas.create_line(h*m+10, 282, h*m+10, 277)
@@ -82,6 +87,7 @@ class QMS:
     self.grid_row += 2
 
   def _cmd_var(self, key, d):
+    """+/- Button Command"""
     i = int(self.var[key].get())
     self.var[key].set(i+d)
     self.ion_generate()
@@ -115,7 +121,7 @@ class QMS:
       vy = vy+(V2/5**2)/m
       y = y+vy
       posy += [z, y+150]
-      # returns
+      # return
       if z > 400:
         idx = self.canvas.create_line(posx, fill='#F00')
         idy = self.canvas.create_line(posy, fill='#00F')
@@ -145,11 +151,11 @@ class QMS:
       if i['mode'] == 0:
         self.canvas.coords(ix, x-5, y-70, x+5, y)
         self.canvas.itemconfig(ix, fill='#000')
-      elif i['mode'] == 1:
+      elif i['mode'] == 1:  # Escape X-Axis
         by = y-i['z']*hy
         self.canvas.coords(ix, x-5, by, x+5, y)
         self.canvas.itemconfig(ix, fill='#F00')
-      elif i['mode'] == -1:
+      elif i['mode'] == -1:  # Escape Y-Axis
         by = y-i['z']*hy
         self.canvas.coords(ix, x-5, by, x+5, y)
         self.canvas.itemconfig(ix, fill='#00F')
