@@ -105,8 +105,8 @@ class QMS:
     x, y, z = 0, 0, 0
     vx, vy, vz = 0, 0, np.sqrt(2*self.var['E']/m)
     posx, posy = [0, 50], [0, 150]
-    AC = int(self.var['ACV'].get())
-    DC = int(self.var['DCV'].get())
+    AC = float(self.var['ACV'].get())
+    DC = float(self.var['DCV'].get())/10
     f = int(self.var['f'].get())
     while True:
       z += vz
