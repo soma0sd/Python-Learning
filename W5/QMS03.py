@@ -11,7 +11,7 @@ class QMS:
   def __init__(self, **kw):
     """초기화"""
     # Variables
-    self.var = {'ACV': 0, 'DCV': 0 , 'f': 0, 'range': 21, 'E': 10}
+    self.var = {'ACV': 0, 'DCV': 0 , 'f': 0, 'range': range(20, 41), 'E': 10}
     self.result = {}
     self.ion = []
     self.grid_row = 0
@@ -58,8 +58,8 @@ class QMS:
     _ = self.canvas.create_text(60, 160, text='z')
     self.canvas.tag_raise(_)
     # Create Result View
-    h = 380/self.var['range']
-    for m in range(1, self.var['range']):
+    h = 380/(max(self.var['range'])+1)
+    for m in self.var['range']:
       self.canvas.create_line(h*m+10, 282, h*m+10, 277)
       self.canvas.create_text(h*m+10, 290, text=m)
       ix = self.canvas.create_rectangle(h*m+5, 209, h*m+15, 279, fill='#000')
@@ -96,7 +96,7 @@ class QMS:
     for i in self.ion:
       self.canvas.delete(i['idx'])
       self.canvas.delete(i['idy'])
-    for m in range(1, self.var['range']):
+    for m in self.var['range']:
       self.ion.append(self.__create_path(m))
     self._result_show()
 
@@ -143,7 +143,7 @@ class QMS:
 
   def _result_show(self):
     hy = 70/400
-    hx = 380/self.var['range']
+    hx = 380/max(self.var['range'])
     for i in self.ion:
       x = hx*i['m']+10
       y = 279
