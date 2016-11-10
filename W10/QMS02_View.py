@@ -29,12 +29,13 @@ class view:
   @ set_lines: 나열 가능한 좌표와 색상 세트를 받아와서 캔버스에 표시
     좌표와 색상은 크기가 같은 집합이어야 한다.
   """
-  def set_lines(self, cx, cy, cz, acolor):
+  def set_lines(self, cx, cy, cz, acolor, mass):
     import numpy as np
     self.reset()  # 캔버스 리셋
     if not len(cx) == len(cy) == len(cz) == len(acolor):
       print('Error(view.set_lines): 입력된 행렬의 크기가 다릅니다')
       return None
+    # ViewX와 ViewY를 그린다
     _d = (self.viewr.winfo_reqheight()-4)/2  # 캔버스 Y 보정치
     for ax, ay, az, c in zip(cx, cy, cz, acolor):
       ax = list(np.array(ax)+_d)
@@ -45,6 +46,14 @@ class view:
         v2 += [az[i], ay[i]]
       self.viewx.create_line(v1, fill=c)
       self.viewy.create_line(v2, fill=c)
+    # 결과창을 그린다. 현재는 컬러맵만 지원
+    _d = self.viewr.winfo_reqwidth()/(len(mass)+1)
+    _w = (_d/2) - 2
+    _h = self.viewr.winfo_reqheight()-4
+    for i, m, c in zip(range(len(mass)), mass, acolor):
+      x = (i+1)*_d
+      self.viewr.create_rectangle(x-_w, _h, x+_w, _h-15, fill=c)
+      self.viewr.create_text(x, _h, text=m, anchor='s', fill='#FFF')
 
   """
   기능 함수

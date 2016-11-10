@@ -21,19 +21,19 @@ from QMS02_View import view as qview
   ion_E: 이온의 운동에너지 [eV]
   rod_r: QMS의 반지름 [m]
   rod_w: QMS의 이온 진행방향 길이 [m]
-  rod_fr: QMS의 AC전원 진동수 [kHz]
+  rod_fr: QMS의 AC전원 진동수 [MHz]
   rod_ac: time=0에서의 AC 전원 [V]
   rod_dc: DC 전원 [V]
 """
 dt = 1E-8
-mass_min = 20
-mass_max = 40
+mass_min = 60
+mass_max = 80
 ion_E = 2
 rod_r = 0.05
 rod_w = 0.1
-rod_fr = 3
-rod_ac = 1
-rod_dc = 1
+rod_fr = 1
+rod_ac = 30
+rod_dc = 1.4
 
 """
 GUI 변수 설정
@@ -50,7 +50,6 @@ menu_w = 100
 """
 q =  1.602176565E-19  # 기본전하량 [C]
 cm = 1.660538782E-27  # 원자질량 [kg]
-k =  8.987551787E9    # 클롱 힘 상수 [N m^2 / C^2]
 ev = 1.60217646E-19   # 전자볼트 [J]
 
 
@@ -59,7 +58,7 @@ ev = 1.60217646E-19   # 전자볼트 [J]
   color_map: 색상맵
   mass_range: 질량 스펙트럼
 """
-_color_point = [[0, (0, 0, 0)], [0.5, (0, 0, 255)], [1,(255, 150, 150)]]
+_color_point = [[0, (0, 0, 0)], [0.5, (0, 0, 255)], [1,(255, 150, 0)]]
 mass_range = range(mass_min, mass_max)
 color_map = qcmap(_color_point, mass_range)
 
@@ -77,14 +76,21 @@ xy2px = view_h/rod_r
 
 def line_make(mass):
   global q, cm, ev, z2px, xy2px
-  global dt, ion_E, rod_r, rod_w, view_w, view_h, color_map
+  global rod_ac, rod_dc, rod_fr, rod_r
+  global dt, ion_E, view_w, view_h, color_map
   dz = np.sqrt(2*ev*ion_E/(mass*cm))*dt
-  x, y, z = 0, 0, 0
+  x, y = np.random.randint(-15, 15)+1E-3, np.random.randint(-15, 15)+1E-3
+  z, t = 0, 0
   ax, ay, az= [x], [y], [z]
   debug = 0  # 포인트 디버깅: dt 조정용
   while -view_h/2 < x < view_h/2 and -view_h/2 < y < view_h/2 and z < view_w:
+    t += dt
+    v = rod_dc+rod_ac*np.cos(2*np.pi*rod_fr*1E6*t)
+    vx = -xy2px*2*q*v*x*dt/(rod_r**2*mass*cm)
+    vy = xy2px*2*q*v*y*dt/(rod_r**2*mass*cm)
     z += z2px*dz
-    x += z2px*dz/mass
+    x += vx*dt
+    y += vy*dt
     ax += [x]
     ay += [y]
     az += [z]
@@ -109,7 +115,7 @@ for m in mass_range:
   cy.append(y)
   cz.append(z)
   ac.append(c)
-view.set_lines(cx, cy, cz, ac)
+view.set_lines(cx, cy, cz, ac, mass_range)
 
 frame_menu = tk.Frame(root, bg='#000', width=menu_w)
 frame_menu.grid(row=0, column=1, sticky='ns')
