@@ -12,7 +12,7 @@ class FieldView:
     self.rodW = 0.05   # Size of QMS side [m]
     self.ACV = 1       # AC Voltage of Rods [V]
     self.DCV = 2       # DC Voltage of Rods [V]
-    self.f = 1.5       # Frequency for AC
+    self.f = 0         # Frequency for AC
     self.time = 0      # Time
     self.resol = 5     # resolution of color map [px]
     self.fmap = []     # color map {id, x, y}

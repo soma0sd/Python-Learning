@@ -36,8 +36,15 @@ class view:
       print('Error(view.set_lines): 입력된 행렬의 크기가 다릅니다')
       return None
     _d = (self.viewr.winfo_reqheight()-4)/2  # 캔버스 Y 보정치
-    for ac, ay, az, col in zip(cx, cy, cz, acolor):
-      print(ac, np.array(ay)+_d, az, col)
+    for ax, ay, az, c in zip(cx, cy, cz, acolor):
+      ax = list(np.array(ax)+_d)
+      ay = list(np.array(ay)+_d)
+      v1, v2 = [], []
+      for i in range(len(ax)):
+        v1 += [az[i], ax[i]]
+        v2 += [az[i], ay[i]]
+      self.viewx.create_line(v1, fill=c)
+      self.viewy.create_line(v2, fill=c)
 
   """
   기능 함수
