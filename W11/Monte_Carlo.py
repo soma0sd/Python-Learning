@@ -3,7 +3,7 @@
 Created on Tue Nov 15 19:29:41 2016
 @author: soma0sd
 
-확률분포함수가 주어졌을 때 몬테카를로 시뮬레이션 수행
+주어진 확률분포함수를 이용해 몬테카를로 시뮬레이션 수행
 """
 import numpy as np
 from scipy import integrate as scint
