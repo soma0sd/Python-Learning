@@ -25,15 +25,15 @@ from QMS02_View import view as qview
   rod_ac: time=0에서의 AC 전원 [V]
   rod_dc: DC 전원 [V]
 """
-dt = 1E-8
+dt = 1E-7
 mass_min = 60
 mass_max = 80
 ion_E = 2
 rod_r = 0.05
 rod_w = 0.1
 rod_fr = 1
-rod_ac = 30
-rod_dc = 1.4
+rod_ac = 900
+rod_dc = 2
 
 """
 GUI 변수 설정
@@ -48,8 +48,8 @@ menu_w = 100
 """
 상수 목록
 """
-q =  1.602176565E-19  # 기본전하량 [C]
-cm = 1.660538782E-27  # 원자질량 [kg]
+q =  1.60217657E-19   # 기본전하량 [C]
+cm = 1.66053878E-27   # 원자질량 [kg]
 ev = 1.60217646E-19   # 전자볼트 [J]
 
 
@@ -59,15 +59,13 @@ ev = 1.60217646E-19   # 전자볼트 [J]
   mass_range: 질량 스펙트럼
 """
 _color_point = [[0, (0, 0, 0)], [0.5, (0, 0, 255)], [1,(255, 150, 0)]]
-mass_range = range(mass_min, mass_max)
+mass_range = range(mass_min, mass_max+1)
 color_map = qcmap(_color_point, mass_range)
-
 
 """
 계산 변수
   z2px: 매트릭 가로좌표를 픽셀 x좌표로 변환
   xy2px: 매트릭 세로좌표를 픽셀 y좌표로 변환
-
 계산 함수
   line_make: 하나의 질량을 입력받아 경로를 출력한다
 """
@@ -79,24 +77,28 @@ def line_make(mass):
   global rod_ac, rod_dc, rod_fr, rod_r
   global dt, ion_E, view_w, view_h, color_map
   dz = np.sqrt(2*ev*ion_E/(mass*cm))*dt
-  x, y = np.random.randint(-15, 15)+1E-3, np.random.randint(-15, 15)+1E-3
+  x, y = np.random.randint(-15, 15), np.random.randint(-15, 15)
+  x, y = 0.01, 0.01
   z, t = 0, 0
-  ax, ay, az= [x], [y], [z]
+  px, py, pz= [x], [y], [z]
   debug = 0  # 포인트 디버깅: dt 조정용
-  while -view_h/2 < x < view_h/2 and -view_h/2 < y < view_h/2 and z < view_w:
+  xy_max = view_h/(2*xy2px)
+  z_max = view_w/(xy2px)
+  vx, vy = 0, 0
+  while -xy_max < x < xy_max and -xy_max < y < xy_max and z < z_max:
     t += dt
     v = rod_dc+rod_ac*np.cos(2*np.pi*rod_fr*1E6*t)
-    vx = -xy2px*2*q*v*x*dt/(rod_r**2*mass*cm)
-    vy = xy2px*2*q*v*y*dt/(rod_r**2*mass*cm)
-    z += z2px*dz
+    vx += -2*q*v*x*dt/(rod_r**2*mass*cm)
+    vy += 2*q*v*y*dt/(rod_r**2*mass*cm)
+    z += dz
     x += vx*dt
     y += vy*dt
-    ax += [x]
-    ay += [y]
-    az += [z]
+    px += [xy2px*x]
+    py += [xy2px*y]
+    pz += [z2px*z]
     debug += 1
   print(debug)
-  return ax, ay, az, color_map.get_colorcode(mass)
+  return px, py, pz, color_map.get_colorcode(mass)
 
 
 """
@@ -121,4 +123,3 @@ frame_menu = tk.Frame(root, bg='#000', width=menu_w)
 frame_menu.grid(row=0, column=1, sticky='ns')
 
 root.mainloop()
-
