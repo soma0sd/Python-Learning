@@ -87,8 +87,9 @@ ax.plot(mc.x, mc.PDF())
 ax.set_title('PDF')
 # [우상] 누적확률밀도
 ax = plt.subplot(222)
-ax.plot(mc.x, mc.CDF())
-ax.set_title('CDF')
+ax.hist(mc.MC(100), bins=100)
+ax.set_xlim(0, 100)
+ax.set_title('MC 100')
 # 몬테카를로 1000회 수행
 ax = plt.subplot(223)
 ax.hist(mc.MC(1000), bins=100)
