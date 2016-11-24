@@ -9,7 +9,7 @@ import time
 
 
 def force(dx, epsilon=1.0, sigma=1.0):
-  ri = sigma/np.sqrt((dx/40)**2)
+  ri = sigma/np.sqrt((dx/20)**2)
   if dx < 0:
     return 24*ri**6*(2*ri**6-1)/dx
   else:
@@ -21,8 +21,6 @@ class md:
   def __init__(self, master, **kw):
     ini = {'size': 400, 'px': 3, 'py': 3, 'vmax': 100}
     ini.update(kw)
-
-
     point = [[0,(255, 0, 0)], [0.5,(0, 0, 0)], [1,(0, 0, 0)]]
     grid = np.arange(0, ini['size']*2, 1)
     self.color = cmap(point, grid)
@@ -62,23 +60,30 @@ class md:
     ptcs = self.particle
     line = self.lines
     t0 = time.time()
+    w, h = canvas.winfo_reqwidth()-4, canvas.winfo_reqheight()-4
     while True:
       dt = time.time()-t0
+      idx = 0
       for i, p1 in enumerate(ptcs):
         fx, fy = 0, 0
+        dx, dy = -p1['x'], -p1['y']
+        fx = force(dx)*dx
+        fy = force(dy)*dy
+        dx, dy = w-p1['x'], h-p1['y']
+        fx += force(dx)*dx
+        fy += force(dy)*dy
         for p2 in ptcs[i+1:]:
           dx, dy = p2['x']-p1['x'], p2['y']-p1['y']
           dr = np.sqrt(dx**2+dy**2)
           fx += force(dr)*dx
           fy += force(dr)*dy
+          p2['vx'] = -force(dr)*dx*dt+p2['vx']
+          p2['vy'] = -force(dr)*dy*dt+p2['vy']
+          self.line_move(line[idx], p1['x'], p1['y'], p2['x'], p2['y'])
+          idx += 1
         p1['vx'], p1['vy'] = fx*dt+p1['vx'], fy*dt+p1['vy']
         p1['x'], p1['y'] = p1['vx']*dt+p1['x'], p1['vy']*dt+p1['y']
         self.particle_move(p1, p1['x'], p1['y'])
-      idx = 0
-      for i, p1 in enumerate(ptcs):
-        for p2 in ptcs[i+1:]:
-          self.line_move(line[idx], p1['x'], p1['y'], p2['x'], p2['y'])
-          idx += 1
       t0 += dt
       canvas.update()
 
@@ -87,6 +92,7 @@ class md:
 
   def particle_move(self, p, x, y):
     canvas = self.canvas
+
     if x <= 0:
       p['x'] = canvas.winfo_reqwidth()-4
     elif y <= 0:
@@ -95,6 +101,7 @@ class md:
       p['x'] = 0
     elif y >= canvas.winfo_reqheight()-4:
       p['y'] = 0
+
     canvas.coords(p['id_o'], self.p_coords(p['x'], p['y']))
     canvas.coords(p['id_t'], p['x'], p['y'])
 
