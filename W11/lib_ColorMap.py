@@ -54,7 +54,7 @@ if __name__ == '__main__':
   tkinter의 Canvas에 적용한 예
   """
   root = tk.Tk()
-  root.title('Color maping')
+  root.title('Color mapping')
   canvas = tk.Canvas(root, width=300, height=150, bg='#FFF')
   canvas.pack()
   _ = cmap(point, grid)
