@@ -29,13 +29,13 @@ class geo:
 
         self.marker = None
 
-    def signal_time(key):
+    def signal_time(slef, key):
         return self.observes[key].arrival_time()
 
-    def observer_x(key):
+    def observer_x(slef, key):
         return self.observes[key].x
 
-    def observer_y(key):
+    def observer_y(slef, key):
         return self.observes[key].y
 
     def mark(self, x, y):
