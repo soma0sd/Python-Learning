@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Sphinx로 메뉴얼 만들기 &#8212; python-learning  문서</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="canonical" href="https://soma0sd.github.io/Python-Learning/docs/sphinx.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="prev" title="파이썬 시작하기" href="start-python.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">python-learning</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=soma0sd&repo=Python-Learning&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>탐색</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="start-python.html">파이썬 시작하기</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sphinx로 메뉴얼 만들기</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">패키지 설치</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">시작하기</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">기본 파일 시스템</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">확장과 도구</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#m2r2">확장: m2r2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#githubpages">확장: githubpages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">도구: sphinx-reload</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="start-python.html" title="이전 장">파이썬 시작하기</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="이동" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="sphinx">
+<h1>Sphinx로 메뉴얼 만들기<a class="headerlink" href="#sphinx" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<p>소스코드는 저장소의 <a class="reference external" href="https://github.com/soma0sd/Python-Learning/tree/main/Sphinx">Sphinx/</a>
+를 참고하세요.</p>
+<p><a class="reference external" href="https://www.sphinx-doc.org/en/master/index.html">스핑크스(Sphinx)</a>는 파이썬 등으로 작성한 소스코드의 설명서를 온라인 문서(HTML), PDF 문서(LaTeX), E북(ePub) 등으로 만들 수 있게 만들어주는 파이썬 패키지입니다.</p>
+<section id="id3">
+<h2>패키지 설치<a class="headerlink" href="#id3" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -U sphinx
+pip install m2r2 sphinx-reload
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>시작하기<a class="headerlink" href="#id4" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>설치 후 소스로 사용할 디렉토리에 다음 명령을 실행하면 기본 파일 구조를 생성합니다.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-quickstart
+</pre></div>
+</div>
+<p>명령 후 초기화에 필요한 몇 가지 질문이 있습니다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Separate</span> <span class="n">source</span> <span class="ow">and</span> <span class="n">build</span> <span class="n">directories</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="p">[</span><span class="n">n</span><span class="p">]:</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">y</span></code>는 <code class="docutils literal notranslate"><span class="pre">source</span></code>와 <code class="docutils literal notranslate"><span class="pre">build</span></code>디렉토리로 내용을 분리하고, <code class="docutils literal notranslate"><span class="pre">n</span></code>은 소스 디렉토리가 없이 루트 디렉토리를 소스로 취급합니다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Project</span> <span class="n">name</span><span class="p">:</span>
+<span class="o">&gt;</span> <span class="n">Author</span> <span class="n">name</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>프로젝트의 이름과 작성자를 입력합니다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Project</span> <span class="n">release</span>
+</pre></div>
+</div>
+<p>프로젝트의 버전(예: <code class="docutils literal notranslate"><span class="pre">1.0.8</span></code>)을 입력합니다.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">Project</span> <span class="n">language</span> <span class="p">[</span><span class="n">en</span><span class="p">]:</span>
+</pre></div>
+</div>
+<p>문서의 언어를 변경합니다. 지원하는 언어의 명칭과 종류는 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language">스핑크스 지원 언어 문서</a>에 소개되어 있습니다.</p>
+<p>모든 과정을 마쳤으면 다음 명령을 통해 웹페이지를 빌드합니다.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make html
+</pre></div>
+</div>
+<p>빌드한 내용은 <code class="docutils literal notranslate"><span class="pre">_build/html</span></code> 혹은 <code class="docutils literal notranslate"><span class="pre">build/html</span></code>에 위치합니다. <a class="reference external" href="#sphinx-reload">sphinx-reload</a>도구를 사용하여 빌드과정을 자동화 할 수 있습니다.</p>
+</section>
+<section id="id6">
+<h2>기본 파일 시스템<a class="headerlink" href="#id6" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_static/</span></code>혹은 <code class="docutils literal notranslate"><span class="pre">source/_static/</span></code>: 웹페이지에 포함할 자바스크립트, 스타일시트, 이미지를 포함합니다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_templates/</span></code>혹은 <code class="docutils literal notranslate"><span class="pre">source/_templates/</span></code>: 확장한 html형식으로 작성한 템플릿 조각입니다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">conf.py</span></code> 혹은 <code class="docutils literal notranslate"><span class="pre">source/conf.py</span></code>: 스핑크스 설정 파일입니다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make.bat</span></code>과 <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">(html|dirhtml...)</span></code> 명령으로 간단하게 <code class="docutils literal notranslate"><span class="pre">sphinx-build</span></code>를 수행할 수 있게 해줍니다. 각각 윈도우용과 리눅스용 파일입니다.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index.rst</span></code>: 전체 문서의 진입점이 되는 문서 파일입니다.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">*.rst</span></code>는 reStructuredText라는 마크업 문서 작성 언어입니다. 스핑크스에서 소개하는 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">reST 문법 문서</a>를 통해 익힐 수 있습니다.</p>
+</section>
+<section id="id7">
+<h2>확장과 도구<a class="headerlink" href="#id7" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<section id="m2r2">
+<h3>확장: m2r2<a class="headerlink" href="#m2r2" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p><a class="reference external" href="https://github.com/crossnox/m2r2">m2r2</a> 패키지는 마크다운 문서를 rst 문서에 끼워넣을 수 있도록 하는 스핑크스의 확장 패키지입니다.</p>
+<p><strong>마크다운을 포함한 rst 문서 내용:</strong></p>
+<div class="highlight-rst notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">mdinclude</span><span class="p">::</span> index.md
+   <span class="nc">:start-line:</span> 2
+   <span class="nc">:end-line:</span> -2
+</pre></div>
+</div>
+<p>포함할 파일을 <code class="docutils literal notranslate"><span class="pre">mdinclude</span></code> 명령으로 지정하고, <code class="docutils literal notranslate"><span class="pre">start-line</span></code>과 <code class="docutils literal notranslate"><span class="pre">end-line</span></code>속성으로 마크다운 문서의 일부만 가져올 수 있습니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">conf.py</span></code>의 <code class="docutils literal notranslate"><span class="pre">extensions</span></code>에 <code class="docutils literal notranslate"><span class="pre">'m2r2'</span></code>를 추가하여 사용할 수 있습니다.</p>
+</section>
+<section id="githubpages">
+<h3>확장: githubpages<a class="headerlink" href="#githubpages" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p><a class="reference external" href="sphinx.ext.githubpages">githubpages</a>는 스핑크스에 기본적으로 포함되어 있는 확장입니다. 빌드할 때 <code class="docutils literal notranslate"><span class="pre">.nojekll</span></code>파일을 생성하고 <code class="docutils literal notranslate"><span class="pre">baseurl</span></code>를 설정합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">conf.py</span></code>의 <code class="docutils literal notranslate"><span class="pre">extensions</span></code>에 <code class="docutils literal notranslate"><span class="pre">'sphinx.ext.githubpages'</span></code>를 추가하여 사용할 수 있습니다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;sphinx.ext.githubpages&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+
+<span class="n">html_baseurl</span><span class="o">=</span><span class="s1">&#39;https://soma0sd.github.io/Python-Learning/&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3>도구: sphinx-reload<a class="headerlink" href="#id10" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p><a class="reference external" href="https://github.com/prkumar/sphinx-reload">sphinx-reload</a>는 문서를 웹에 올리기 전에 미리 문서의 모습을 편리하게 확인할 수 있도록 하는 도구입니다. 웹 브라우저를 통해 빌드한 파일을 볼 수 있고 소스파일을 감시하다가 변경사항이 발생하면 자동으로 빌드를 실행하고 웹브라우저를 새로고칩니다.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-reload <span class="o">[</span>--build-dir 빌드디렉토리<span class="o">]</span> 소스디렉토리 <span class="o">[</span>--watch 감시패턴 <span class="o">[</span>PATTERN ...<span class="o">]]</span>
+</pre></div>
+</div>
+<p>현재 저장소의 경우(루트에서 실행):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-reload --build-dir <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/docs/ Sphinx/ --watch <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/**/**/*.md <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/**/**/*.rst <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/Sphinx/conf.py
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, soma0sd.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/docs/sphinx.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
