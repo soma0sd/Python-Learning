@@ -1,5 +1,2 @@
-# 12주차
+# 데이터 분석하기
 
-## Peak Finding
-
-![](0515-01PeakFind.png)

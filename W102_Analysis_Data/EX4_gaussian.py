@@ -1,5 +1,6 @@
 """
-0512-02-GaussianFit
+.. image:: EX4_gaussian.png
+
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -25,12 +26,14 @@ y = np.array(y)
 def gaussian(x, A, mu, sigma):
     return A*np.exp(-(x-mu)**2/(2*sigma**2))
 
-_param, _ = curve_fit(gaussian, x, y)
-new_x = np.linspace(0, 8)
-new_y = gaussian(new_x, *_param)
 
-plt.plot(x, y, '.k')
-plt.plot(new_x, new_y, '--r')
-txt = "A {:.2f}\n$\mu$ {:.2f}\n$\sigma$ {:.2f}".format(*_param)
-plt.text(6, 0.8, txt)
-plt.savefig("0512-02-GaussianFit.png", bbox_inches='tight')
+if __name__ == "__main__":
+    _param, _ = curve_fit(gaussian, x, y)
+    new_x = np.linspace(0, 8)
+    new_y = gaussian(new_x, *_param)
+
+    plt.plot(x, y, '.k')
+    plt.plot(new_x, new_y, '--r')
+    txt = "A {:.2f}\n$\mu$ {:.2f}\n$\sigma$ {:.2f}".format(*_param)
+    plt.text(6, 0.8, txt)
+    plt.savefig("EX4_gaussian.png", bbox_inches='tight')

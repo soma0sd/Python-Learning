@@ -7,8 +7,8 @@ REM Command file for Sphinx documentation
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
-set SOURCEDIR=source
-set BUILDDIR=../docs
+set SOURCEDIR=./
+set BUILDDIR=docs
 
 %SPHINXBUILD% >NUL 2>NUL
 if errorlevel 9009 (
@@ -24,12 +24,23 @@ if errorlevel 9009 (
 )
 
 if "%1" == "" goto help
+if "%1" == "start" goto start
+if "%1" == "install" goto install
 
 %SPHINXBUILD% -M %1 %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
 goto end
 
 :help
 %SPHINXBUILD% -M help %SOURCEDIR% %BUILDDIR% %SPHINXOPTS% %O%
+
+:start
+sphinx-reload --build-dir %BUILDDIR% ./ --watch index.rst ./**/*.rst ./**/*.md ./**/*.py
+goto end
+
+:install
+./make html
+robocopy %BUILDDIR%html %BUILDDIR% 
+goto end
 
 :end
 popd

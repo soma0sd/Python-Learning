@@ -1,4 +1,4 @@
-# 그래프 그리기
+# matplotlib 시작하기
 
 ## 그래프 패키지 설치하기
 
@@ -29,22 +29,9 @@ sudo apt install python3-matplotlib python3-numpy python3-scipy
 
 [NumPy](https://numpy.org/)는 수치해석 및 행렬연산을 위한 다양한 도구와 새로운 자료형 등을 제공합니다. [NumPy 설명서](https://numpy.org/doc/stable/)를 통해서 상세한 기능들을 살펴볼 수 있습니다. [SciPy](https://scipy.org/)는 과학을 위한 특수함수 및 통계 등을 제공합니다. [SciPy 설명서](https://docs.scipy.org/doc/scipy/reference/)를 통해서 상세한 설명을 살펴볼 수 있습니다.
 
-## pyplot 모듈
 
-`matplotlib`는 너무 복잡한 모듈과 설정을 가지고 있어서 수업에는 쉽고 단순한 인터페이스를 제공하는 `pyplot`모듈을 이용합니다.
+## 그래프 작성 패키지: matplotlib
 
-```python
-import matplotlib.pyplot as plt
+## 수학 기능 확장 도구: numpy
 
-x = [1, 2, 3]
-y = [3, 1, 4]
-plt.plot(x, y)
-plt.show()
-```
-
-![그래프](./plotting_1.png)
-
-위 예제를 실행하면 새로운 창에 그림과 같은 그래프를 포시합니다. 아나콘다(Anaconda)의 스파이더(Spyder) 편집기를 사용하거나 구글 코랩(colab) 등 주피터 노트북(Jupyter notebook)기반의 편집기에서 실행하는 경우 결과 표시 창에 그래프를 출력합니다.
-
-[matplotlib](https://matplotlib.org/)의 예제(Example)과 튜토리얼(Tutorials) 문서들을 통해 다양한 그림을 작성하는 방법을 배울 수 있습니다.
-
+## 과학용 함수 및 도구: scipy
