@@ -3,5 +3,8 @@
 # Python ENV
 .pyenv/
 
+# python chache
+__pycache__/
+
 # builds
 docs/html/

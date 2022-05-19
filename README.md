@@ -1,12 +1,15 @@
-# python-study
-충북대학교 물리학부 전산물리 수업을 위한 python source code 예제입니다.
- 각 테마에 따라 예제가 분류되어 있고, 난이도/진도순으로 번호가 매겨져 있습니다.
+# 파이썬 학습자료 소스코드 저장소
 
-## 실습내용
-예제 요청은 soma0sd@gmail.com 로 요청내용을 보내주세요.
+작성자: soma0sd@gmail.com
 
-### Monte Carlo
-1주차에 실습했던 내용. 몬테카를로 방법을 활용하여 π값을 찾는 방법을 다룹니다. numpy와 random, matplotlib를 사용합니다.
+고등학교 방과후 프로그래밍 수업과 대학교 전산물리학 조교 때 만든 예제, 전산물리교재연구 수업 때 만든 예제들을 모은 저장소입니다. 저장소의 내용은 [Sphinx를 이용한 문서화](https://soma0sd.github.io/Python-Learning)를 진행하는 중입니다. 
 
-### tkinter
-2주차 실습내용. Canvas를 다루는 방법과 여러가지 GUI구성요소들을 활용하여 canvas를 제어하는 방법을 다룹니다. tkinter와 numpy를 사용합니다.
+여기서는 파이썬의 기초문법이나 개념을 다루지 않습니다. 여기서는 파이썬으로 무엇을 할 수 있는지 수업과 관련하여 구체적으로 다룰 것입니다. 만약 파이썬을 기초부터 학습하고 싶은 경우에는 [파이썬 공식 문서](https://docs.python.org/ko/3/)를 참고하시는 것이 좋습니다.
+
+## 분류 코드
+
+- W000: 파이썬 기본
+- W100: matplotlib
+- W200: tkinter
+- W300: Jupyter Notebook
+- W999: 기타
