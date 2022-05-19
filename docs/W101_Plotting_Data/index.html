@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>데이터와 함수 &#8212; python-learning  문서</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/katex.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="canonical" href="https://soma0sd.github.io/Python-Learning/W101_Plotting_Data/index.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="next" title="데이터 분석하기" href="../W102_Analysis_Data/index.html" />
+    <link rel="prev" title="matplotlib 시작하기" href="../W100_matplotlib/README.html" />
+<script defer src="../_static/js/katex.js"></script>
+<script defer src="../_static/js/katex-auto-render.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+    ],
+    });"></script>
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">python-learning</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=soma0sd&repo=Python-Learning&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>탐색</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../W000_Start_Python/index.html">파이썬 시작하기</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../W100_matplotlib/index.html">그래프 그리기</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../W100_matplotlib/README.html">matplotlib 시작하기</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">데이터와 함수</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">주어진 데이터로 그리기</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">함수의 그래프 그리기</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../W102_Analysis_Data/index.html">데이터 분석하기</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../W999_Other_Examples/index.html">기타 예제 모음</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../W100_matplotlib/index.html">그래프 그리기</a><ul>
+      <li>Previous: <a href="../W100_matplotlib/README.html" title="이전 장">matplotlib 시작하기</a></li>
+      <li>Next: <a href="../W102_Analysis_Data/index.html" title="다음 장">데이터 분석하기</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="이동" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>데이터와 함수<a class="headerlink" href="#id1" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<section id="id2">
+<h2>주어진 데이터로 그리기<a class="headerlink" href="#id2" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>는 너무 복잡한 모듈과 설정을 가지고 있어서 수업에는 쉽고 단순한 인터페이스를 제공하는 <code class="docutils literal notranslate"><span class="pre">pyplot</span></code>모듈을 이용합니다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="./plotting_1.png"><img alt="그래프" src="../_images/plotting_1.png" /></a>
+<p>위 예제를 실행하면 새로운 창에 그림과 같은 그래프를 포시합니다. 아나콘다(Anaconda)의 스파이더(Spyder) 편집기를 사용하거나 구글 코랩(colab) 등 주피터 노트북(Jupyter notebook)기반의 편집기에서 실행하는 경우 결과 표시 창에 그래프를 출력합니다.</p>
+<p><a class="reference external" href="https://matplotlib.org/">matplotlib</a>의 예제(Example)과 튜토리얼(Tutorials) 문서들을 통해 다양한 그림을 작성하는 방법을 배울 수 있습니다.</p>
+</section>
+<section id="id3">
+<h2>함수의 그래프 그리기<a class="headerlink" href="#id3" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p><a class="reference external" href="https://github.com/soma0sd/Python-Learning/blob/main/W101_Plotting_Data/EX1_plotting_function.py">EX1_plotting_function.py</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="linenos"> 6</span>    <span class="sd">&quot;&quot;&quot;$f(x)$ 함수&quot;&quot;&quot;</span>
+<span class="linenos"> 7</span>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">11</span>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos">12</span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="linenos">13</span>    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<span class="target" id="module-W101_Plotting_Data.EX1_plotting_function"></span><p>$\sin(x)$ 함수를 지정한 범위 $[0, 3 \pi]$ 의 그래프로 출력합니다.</p>
+<img alt="../_images/function_plot_1.png" src="../_images/function_plot_1.png" />
+<p>np.linspace(0, 3)은 0부터 3사이 숫자를 일정 간격으로 50개(기본값) 만들어
+numpy의 array 자료형으로 출력합니다. 출력 결과는 [0.00, 0.06, 0.12,..] 형태입니다.</p>
+<p>np.linspace(xmin, xmax, ndata)는 xmin 부터 xmax 사이 숫자를 일정 간격으로
+ndata 개수만큼 생성하여 numpy 의 array 자료형으로 출력합니다.</p>
+<p>plt.grid(True)를 사용하여 그래프에 격자 보조선을 넣을 수 있습니다.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, soma0sd.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/W101_Plotting_Data/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

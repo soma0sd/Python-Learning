@@ -14,4 +14,5 @@
    :hidden:
 
    W000_Start_Python/index.rst
+   W100_matplotlib/index.rst
    W999_Other_Examples/index.rst
