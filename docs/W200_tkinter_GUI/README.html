@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2주차 - GUI &#8212; python-learning  문서</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/katex.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="canonical" href="https://soma0sd.github.io/Python-Learning/W200_tkinter_GUI/README.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+<script defer src="../_static/js/katex.js"></script>
+<script defer src="../_static/js/katex-auto-render.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+    ],
+    });"></script>
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">python-learning</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=soma0sd&repo=Python-Learning&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>탐색</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../W000_Start_Python/index.html">파이썬 시작하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W999_Other_Examples/index.html">기타 예제 모음</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="이동" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="gui">
+<h1>2주차 - GUI<a class="headerlink" href="#gui" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<p>python에 내장되어있는 GUI표현 패키지 중 tkinter를 이용하게 된다. 물리학 시늉내기에 필요한 조건 직접 입력, 제어 버튼, 캔버스 핸들링을 위주로 공부한다.</p>
+<section id="id1">
+<h2>최종 과제<a class="headerlink" href="#id1" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>다음의 조건을 만족하는 전기력선 드로잉 프로그램을 제작하라</p>
+<ol class="arabic simple">
+<li><p>키보드 입력을 통해 변수를 전달받는 방식으로 캔버스에 전하를 추가한다</p></li>
+<li><p>캔버스 안의 전하는 전하의 크기를 전기력선의 갯수로 표현한다.</p></li>
+<li><p>복수개의 전하가 있을 때, 전기력선의 변화를 캔버스 위에 표현하라.</p></li>
+<li><p>초기상태로 reset이 가능해야 한다.</p></li>
+<li><p>(옵션) 생성된 전하들 중에 한개만 골라 삭제할 수 있도록 추가메뉴를 구성하라</p></li>
+</ol>
+</section>
+<section id="id2">
+<h2>주요 패키지<a class="headerlink" href="#id2" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>괄호 안은 적용예제</p>
+<ul class="simple">
+<li><p><strong>tkiner</strong>(01-07): GUI를 출력하는 표준 패키지</p></li>
+<li><p><strong>numpy</strong>(02): 고급 수학연산을 위한 패키지</p></li>
+<li><p><strong>time</strong>(02): 시간과 관련된 모듈이 들어있는 표준 패키지</p></li>
+<li><p><strong>matplotlb(06)</strong>: 데이터를 그래프, 히스토그램 등으로 출력할 수 있는 모듈을 제공하는 패키지(<span class="raw-html-m2r"><span style="color:red"><b>주의</b></span></span>: anaconda3에서 개발하는 경우 예제 06을 반드시 참고할 것)</p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, soma0sd.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/W200_tkinter_GUI/README.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

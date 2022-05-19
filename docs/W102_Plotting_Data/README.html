@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>그래프 그리기 &#8212; python-learning  문서</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/katex.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="canonical" href="https://soma0sd.github.io/Python-Learning/W102_Plotting_Data/README.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+<script defer src="../_static/js/katex.js"></script>
+<script defer src="../_static/js/katex-auto-render.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+    ],
+    });"></script>
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">python-learning</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=soma0sd&repo=Python-Learning&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>탐색</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../W000_Start_Python/index.html">파이썬 시작하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W999_Other_Examples/index.html">기타 예제 모음</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="이동" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>그래프 그리기<a class="headerlink" href="#id1" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<section id="id2">
+<h2>그래프 패키지 설치하기<a class="headerlink" href="#id2" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p><a class="reference external" href="https://matplotlib.org/">matplotlib</a>은 파이썬을 위한 시각화 도구입니다. 각종 그래프와 그림, 다이얼로그등을 다루는 것을 목적으로 합니다. 추가로 설치하는 <a class="reference external" href="https://numpy.org/">NumPy</a>와 <a class="reference external" href="https://scipy.org/">SciPy</a>는 수치해석, 통계, 과학 등을 위한 각종 함수와 데이터형을 제공합니다.</p>
+<p>여기서는 파이썬으로 그래프를 그리는데 필요한 패키지를 설치하고 패키지가 제대로 설치되었는지 확인하도록 합니다.</p>
+<p>앞으로의 실습에 필요한 <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>과 <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code>를 설치합니다. 구글 코랩(Google Colab)이나 아나콘다(Anaconda)를 사용하는 경우, 이 패키지들은 미리 설치되어 있으니 굳이 설치할 필요가 없습니다.</p>
+<p>PIP 설치 및 업그레이드</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m pip install --upgrade matplotlib numpy scipy
+</pre></div>
+</div>
+<p>아나콘다(Anaconda) 설치 및 업그레이드: 보통은 기본으로 설치되어 있습니다.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install --upgrade matplotlib numpy scipy
+</pre></div>
+</div>
+<p>리눅스 설치</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt update <span class="o">&amp;&amp;</span> sudo apt upgrade
+sudo apt install python3-matplotlib python3-numpy python3-scipy
+</pre></div>
+</div>
+<p><a class="reference external" href="https://numpy.org/">NumPy</a>는 수치해석 및 행렬연산을 위한 다양한 도구와 새로운 자료형 등을 제공합니다. <a class="reference external" href="https://numpy.org/doc/stable/">NumPy 설명서</a>를 통해서 상세한 기능들을 살펴볼 수 있습니다. <a class="reference external" href="https://scipy.org/">SciPy</a>는 과학을 위한 특수함수 및 통계 등을 제공합니다. <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/">SciPy 설명서</a>를 통해서 상세한 설명을 살펴볼 수 있습니다.</p>
+</section>
+<section id="pyplot">
+<h2>pyplot 모듈<a class="headerlink" href="#pyplot" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>는 너무 복잡한 모듈과 설정을 가지고 있어서 수업에는 쉽고 단순한 인터페이스를 제공하는 <code class="docutils literal notranslate"><span class="pre">pyplot</span></code>모듈을 이용합니다.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<a class="reference external image-reference" href="./plotting_1.png"><img alt="그래프" src="../_images/plotting_1.png" /></a>
+<p>위 예제를 실행하면 새로운 창에 그림과 같은 그래프를 포시합니다. 아나콘다(Anaconda)의 스파이더(Spyder) 편집기를 사용하거나 구글 코랩(colab) 등 주피터 노트북(Jupyter notebook)기반의 편집기에서 실행하는 경우 결과 표시 창에 그래프를 출력합니다.</p>
+<p><a class="reference external" href="https://matplotlib.org/">matplotlib</a>의 예제(Example)과 튜토리얼(Tutorials) 문서들을 통해 다양한 그림을 작성하는 방법을 배울 수 있습니다.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, soma0sd.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/W102_Plotting_Data/README.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

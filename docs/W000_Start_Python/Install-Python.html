@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>파이썬 설치하기 &#8212; python-learning  문서</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/katex.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="canonical" href="https://soma0sd.github.io/Python-Learning/W000_Start_Python/Install-Python.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+<script defer src="../_static/js/katex.js"></script>
+<script defer src="../_static/js/katex-auto-render.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+    ],
+    });"></script>
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">python-learning</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=soma0sd&repo=Python-Learning&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>탐색</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">파이썬 시작하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W999_Other_Examples/index.html">기타 예제 모음</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="이동" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>파이썬 설치하기<a class="headerlink" href="#id1" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<section id="id2">
+<h2>윈도우 10/11<a class="headerlink" href="#id2" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p><a class="reference external" href="https://www.python.org/">파이썬 재단</a>의 웹페이지에서 최신 버전의 설치 파일을 내려받는 방법도 있지만 <a class="reference external" href="https://apps.microsoft.com/store/search/python">마이크로소프트 스토어</a>를 사용하여 설치하는 방법이 좋습니다. 여러 이유가 있지만 너무 많은 패키지를 설치했거나 패키지 사이의 충돌 원인을 알수 없을 경우 앱 설정을 통해 간편하게 초기화 할 수 있기 때문입니다.</p>
+<p>설치가 끝나면 시작 버튼에서 마우스 오른쪽 버튼을 눌러 <strong>Windows 터미널</strong>을 실행한 후 설치한 파이썬 버전을 확인합니다.</p>
+<div class="highlight-ps1 notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="p">-</span><span class="n">-version</span>
+</pre></div>
+</div>
+<section id="wsl">
+<h3>WSL 사용하기<a class="headerlink" href="#wsl" title="이 표제에 대한 퍼머링크">¶</a></h3>
+<p>WSL(Windows Subsystem for Linux; 리눅스용 윈도우 하위 시스템)은 윈도우 환경에서 리눅스를 사용할 수 있도록 해주는 편리한 기능입니다. 윈도우를 사용하면서 리눅스 환경의 개발을 익히는데 도움됩니다.</p>
+<p>시작 버튼에서 마우스 오른쪽 버튼을 눌러 <strong>Windows 터미널(관리지)</strong>를 실행한 뒤, 다음 명령을 실행합니다.</p>
+<div class="highlight-ps1 notranslate"><div class="highlight"><pre><span></span><span class="n">wsl</span> <span class="p">-</span><span class="n">-install</span>
+</pre></div>
+</div>
+<p>환경 구성과 리눅스(기본값은 우분투 20.04)설치까지 자동으로 수행합니다. 설치가 끝난 뒤 PC를 재시작하면 자동으로 터미널이 열리고 여기서 UNIX 유저이름과 비밀번호를 설정합니다.</p>
+</section>
+</section>
+<section id="id5">
+<h2>우분투/데비안/WSL<a class="headerlink" href="#id5" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>터미널에서 다음 명령을 실행합니다.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 패키지 목록 업데이트</span>
+sudo apt update
+<span class="c1"># 선택</span>
+sudo apt upgrade
+<span class="c1"># 파이썬과 가상환경 생성 패키지 설치</span>
+sudo apt-get install python3 python3-venv
+</pre></div>
+</div>
+<p>설치 후 버전 확인을 통해 설치한 파이썬을 확인합니다.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 --version
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>파이썬 가상환경 생성<a class="headerlink" href="#id6" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m venv <span class="o">{</span>생성할 가상환경 이름<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m venv .pyenv
+</pre></div>
+</div>
+<p>현재 디렉토리 아래 <code class="docutils literal notranslate"><span class="pre">.pyenv</span></code>라는 이름으로 가상환경 디렉토리가 생성됩니다. 이제 만든 가상환경을 활성화합니다.</p>
+<p><strong>윈도우(파워쉘):</strong></p>
+<div class="highlight-ps1 notranslate"><div class="highlight"><pre><span></span><span class="p">./.</span><span class="n">pyenv</span><span class="p">/</span><span class="n">bin</span><span class="p">/</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+</pre></div>
+</div>
+<p><strong>리눅스(Bash):</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> .pyenv/bin/Activate.ps1
+</pre></div>
+</div>
+<p>성공적으로 활성화 된 경우, 만든 가상환경 이름이 프롬프트의 제일 앞에 등장하게 됩니다.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, soma0sd.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/W000_Start_Python/Install-Python.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
