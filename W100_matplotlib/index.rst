@@ -1,11 +1,14 @@
-그래프 그리기
-=============
+====================
+matplotlib 시작하기
+====================
 
-.. toctree::
+.. mdinclude:: README.md
+   :start-line: 2
 
-   README.md
-   ../W101_Plotting_Data/index.rst
-   ../W102_Analysis_Data/index.rst
+.. currentmodule:: W100_matplotlib
 
+.. automodule:: W100_matplotlib.EX1_plotting_function
 
+.. automodule:: W100_matplotlib.EX2_plotting_data
 
+.. automodule:: W100_matplotlib.EX3_histogram

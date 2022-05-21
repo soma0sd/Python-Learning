@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>데이터 분석하기 &#8212; python-learning  문서</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/katex.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="canonical" href="https://soma0sd.github.io/Python-Learning/W110_Analysis_Data/index.html" />
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="next" title="미적분 값 계산하기" href="../W120_Calculus/index.html" />
+    <link rel="prev" title="matplotlib 시작하기" href="../W100_matplotlib/index.html" />
+<script defer src="../_static/js/katex.js"></script>
+<script defer src="../_static/js/katex-auto-render.js"
+    onload="renderMathInElement(document.body, {
+        delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+    ],
+    });"></script>
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">python-learning</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=soma0sd&repo=Python-Learning&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>탐색</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../W000_Python_Basic/index.html">파이썬 기초</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W100_matplotlib/index.html">matplotlib 시작하기</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">데이터 분석하기</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-W110_Analysis_Data.EX1_data_fitting">데이터 피팅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-W110_Analysis_Data.EX2_overfit">오버피팅</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-W110_Analysis_Data.EX3_outlier">이상치</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-W110_Analysis_Data.EX4_gaussian">가우스 모델</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-W110_Analysis_Data.EX5_peak">피크 분석</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../W120_Calculus/index.html">미적분 값 계산하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W130_Differential_Equation/index.html">미분방정식의 풀이</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W140_Root_Finding/index.html">방정식의 해 찾기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W150_Monte_Carlo_Method/index.html">몬테 카를로 방법</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W160_Logistic_Map/index.html">로지스틱 사상</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W200_tkinter_GUI/index.html">tkinter 시작하기</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../W999_Other_Examples/index.html">기타 예제 모음</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../W100_matplotlib/index.html" title="이전 장">matplotlib 시작하기</a></li>
+      <li>Next: <a href="../W120_Calculus/index.html" title="다음 장">미적분 값 계산하기</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">빠른 검색</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="이동" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>데이터 분석하기<a class="headerlink" href="#id1" title="이 표제에 대한 퍼머링크">¶</a></h1>
+<section id="module-W110_Analysis_Data.EX1_data_fitting">
+<span id="id2"></span><h2>데이터 피팅<a class="headerlink" href="#module-W110_Analysis_Data.EX1_data_fitting" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>온라인을 통해 나사의 연평균기온 데이터를 내려받고 해당 값에
+다항식 피팅을 사용하여 근사합니다.</p>
+<p>얻은 다항식 계수를 통해 지구 연평균 기온의 추세를 추정하거나
+이후 값을 예측하는데 활용할 수 있습니다.</p>
+<img alt="../_images/EX1_data_fitting.png" src="../_images/EX1_data_fitting.png" />
+<p>예제는 1차 다항식과 9차 다항식을 사용했습니다.
+주제와 상황에 따라 적당한 다항식 근사를 사용하는 방법도 고민해봅시다.</p>
+<p><a class="reference external" href="https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX1_data_fitting.py">EX1_data_fitting.py</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="k">def</span> <span class="nf">get_data</span><span class="p">():</span>
+<span class="linenos"> 6</span>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos"> 7</span><span class="sd">    NASA로부터 1880년부터 2019년까지 월별 평균 기온 정보를 받아옵니다.</span>
+<span class="linenos"> 8</span><span class="sd">    이 함수는 웹 문서를 읽어오는 패키지인 requests를 사용하며</span>
+<span class="linenos"> 9</span><span class="sd">    csv는 쉼표와 줄바꿈문자를 이용해서 데이터를 구분하는 형식입니다.</span>
+<span class="linenos">10</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">11</span>    <span class="kn">import</span> <span class="nn">requests</span>
+<span class="linenos">12</span>    <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;http://data.giss.nasa.gov/gistemp/tabledata_v3/GLB.Ts+dSST.csv&#39;</span>
+<span class="linenos">13</span>    <span class="n">data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">n&#39;</span><span class="p">)</span>
+<span class="linenos">15</span>    <span class="c1"># \n은 줄바꿈문자. 온라인에서 정보를 받아와서 각 줄별로 리스트를 생성한다</span>
+<span class="linenos">16</span>    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<span class="linenos">17</span>    <span class="c1"># 각 줄마다 쉼표로 분리해서 2차원 리스트를 만든다</span>
+<span class="linenos">18</span>    <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:])[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># 데이터가 아닌 부분은 슬라이싱</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">22</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">()</span>
+<span class="linenos">23</span>    <span class="n">years</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<span class="linenos">24</span>    <span class="n">tempr</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">13</span><span class="p">])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>    <span class="c1"># 다항식 fitting - 1차</span>
+<span class="linenos">27</span>    <span class="n">fitsp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">years</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">years</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
+<span class="linenos">28</span>    <span class="n">fit1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">tempr</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span>    <span class="c1"># 다항식 fitting - 9차</span>
+<span class="linenos">31</span>    <span class="n">fit9</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">tempr</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="linenos">32</span>
+<span class="linenos">33</span>    <span class="c1"># PLOT</span>
+<span class="linenos">34</span>    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="linenos">35</span>    <span class="n">raw</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">years</span><span class="p">,</span> <span class="n">tempr</span><span class="p">,</span> <span class="s1">&#39;:g&#39;</span><span class="p">)</span>
+<span class="linenos">36</span>    <span class="n">p1</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fitsp</span><span class="p">,</span> <span class="n">fit1</span><span class="p">(</span><span class="n">fitsp</span><span class="p">),</span> <span class="s2">&quot;--r&quot;</span><span class="p">)</span>
+<span class="linenos">37</span>    <span class="n">p9</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fitsp</span><span class="p">,</span> <span class="n">fit9</span><span class="p">(</span><span class="n">fitsp</span><span class="p">),</span> <span class="s2">&quot;--k&quot;</span><span class="p">)</span>
+<span class="linenos">38</span>    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="n">raw</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p9</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;rawdata&#39;</span><span class="p">,</span> <span class="s1">&#39;fit1&#39;</span><span class="p">,</span> <span class="s1">&#39;fit9&#39;</span><span class="p">],</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">))</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span>    <span class="c1"># 만들어진 그래프 보기</span>
+<span class="linenos">41</span>    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="linenos">42</span>
+<span class="linenos">43</span>    <span class="c1"># 만든 그래프 저장</span>
+<span class="linenos">44</span>    <span class="c1"># plt.savefig(&quot;EX1_data_fitting.png&quot;)</span>
+</pre></div>
+</div>
+</section>
+<section id="module-W110_Analysis_Data.EX2_overfit">
+<span id="id3"></span><h2>오버피팅<a class="headerlink" href="#module-W110_Analysis_Data.EX2_overfit" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<p>높은 차수의 다항식을 고려할 수록 당장 주어진 데이터와 잘 들어맞는 것 처럼 보이지만
+얻은 계수를 토대로 값을 예측할 때는 오히려 더 좋지 않은 추론을 하게 될 수도 있습니다.</p>
+<p>예제는 낮은 차수로부터 점점 높은 차수로 피팅한 결과를 그림파일로 저장합니다.</p>
+<img alt="../_images/EX2_overfit.png" src="../_images/EX2_overfit.png" />
+<p><a class="reference external" href="https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX2_overfit.py">EX2_overfit.py</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">0.0202184</span><span class="p">,</span>   <span class="mf">0.07103606</span><span class="p">,</span>  <span class="mf">0.0871293</span><span class="p">,</span>   <span class="mf">0.11827443</span><span class="p">,</span>  <span class="mf">0.14335329</span><span class="p">,</span>  <span class="mf">0.38344152</span><span class="p">,</span>  <span class="mf">0.41466194</span><span class="p">,</span>  <span class="mf">0.4236548</span><span class="p">,</span>   <span class="mf">0.43758721</span><span class="p">,</span>  <span class="mf">0.46147936</span><span class="p">,</span>  <span class="mf">0.52184832</span><span class="p">,</span>  <span class="mf">0.52889492</span><span class="p">,</span>  <span class="mf">0.54488318</span><span class="p">,</span>  <span class="mf">0.5488135</span><span class="p">,</span>   <span class="mf">0.56804456</span><span class="p">,</span>  <span class="mf">0.60276338</span><span class="p">,</span>  <span class="mf">0.63992102</span><span class="p">,</span>  <span class="mf">0.64589411</span><span class="p">,</span>  <span class="mf">0.71518937</span><span class="p">,</span>  <span class="mf">0.77815675</span><span class="p">,</span>  <span class="mf">0.78052918</span><span class="p">,</span>  <span class="mf">0.79172504</span><span class="p">,</span>  <span class="mf">0.79915856</span><span class="p">,</span>  <span class="mf">0.83261985</span><span class="p">,</span>  <span class="mf">0.87001215</span><span class="p">,</span>  <span class="mf">0.891773</span><span class="p">,</span>    <span class="mf">0.92559664</span><span class="p">,</span>  <span class="mf">0.94466892</span><span class="p">,</span>  <span class="mf">0.96366276</span><span class="p">,</span>  <span class="mf">0.97861834</span><span class="p">]</span>
+<span class="linenos"> 5</span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span> <span class="mf">1.0819082</span><span class="p">,</span> <span class="mf">0.87027612</span><span class="p">,</span> <span class="mf">1.14386208</span><span class="p">,</span>  <span class="mf">0.70322051</span><span class="p">,</span>  <span class="mf">0.78494746</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25265944</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.22066063</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.26595867</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.4562644</span><span class="p">,</span>  <span class="o">-</span><span class="mf">0.53001927</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.86481449</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.99462675</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.87458603</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.83407054</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.77090649</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.83476183</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.03080067</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.02544303</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0788268</span><span class="p">,</span>  <span class="o">-</span><span class="mf">1.00713288</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.03009698</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.63623922</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.86230652</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.75328767</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.70023795</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.41043495</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.50486767</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.27907117</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.25994628</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.06189804</span><span class="p">]</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="n">degs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">11</span>    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="linenos">12</span>    <span class="n">new_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>    <span class="k">for</span> <span class="n">ix</span><span class="p">,</span> <span class="n">deg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">degs</span><span class="p">):</span>
+<span class="linenos">15</span>        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">ix</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="linenos">16</span>        <span class="n">fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">deg</span><span class="p">))</span>
+<span class="linenos">17</span>        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s2">&quot;.k&quot;</span><span class="p">)</span>
+<span class="linenos">18</span>        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">fit</span><span class="p">(</span><span class="n">new_x</span><span class="p">),</span> <span class="s2">&quot;--r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;DEG: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">deg</span><span class="p">))</span>
+<span class="linenos">19</span>        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="linenos">20</span>
+<span class="linenos">21</span>    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;EX2_overfit.png&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="module-W110_Analysis_Data.EX3_outlier">
+<span id="id4"></span><h2>이상치<a class="headerlink" href="#module-W110_Analysis_Data.EX3_outlier" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<img alt="../_images/EX3_outlier.png" src="../_images/EX3_outlier.png" />
+<p><a class="reference external" href="https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX3_outlier.py">EX3_outlier.py</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="n">v</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="linenos"> 4</span><span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.4</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">def</span> <span class="nf">gen_data</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="linenos"> 7</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">v</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">*</span><span class="mf">0.5</span>
+<span class="linenos"> 8</span>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">)):</span>
+<span class="linenos"> 9</span>        <span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">-</span><span class="mf">0.3</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span>
+<span class="linenos">10</span>    <span class="k">return</span> <span class="n">y</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">13</span>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">gen_data</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos">15</span>    <span class="n">fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="linenos">16</span>    <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span>    <span class="n">new_x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">19</span>    <span class="n">new_y</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="linenos">20</span>    <span class="k">for</span> <span class="n">_x</span><span class="p">,</span> <span class="n">_y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="linenos">21</span>        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">_y</span><span class="o">-</span><span class="n">fit</span><span class="p">(</span><span class="n">_x</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">std</span><span class="p">:</span>
+<span class="linenos">22</span>            <span class="n">new_x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_x</span><span class="p">)</span>
+<span class="linenos">23</span>            <span class="n">new_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_y</span><span class="p">)</span>
+<span class="linenos">24</span>    <span class="n">new_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;.k&#39;</span><span class="p">)</span>
+<span class="linenos">27</span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">,</span> <span class="s1">&#39;.r&#39;</span><span class="p">)</span>
+<span class="linenos">28</span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;--b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+<span class="linenos">29</span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">new_fit</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;--k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">)</span>
+<span class="linenos">30</span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mf">0.25</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;real&#39;</span><span class="p">)</span>
+<span class="linenos">31</span>    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="linenos">32</span>    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;EX3_outlier.png&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="module-W110_Analysis_Data.EX4_gaussian">
+<span id="id5"></span><h2>가우스 모델<a class="headerlink" href="#module-W110_Analysis_Data.EX4_gaussian" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<img alt="../_images/EX4_gaussian.png" src="../_images/EX4_gaussian.png" />
+<p><a class="reference external" href="https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX4_gaussian.py">EX4_gaussian.py</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 2</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.267</span><span class="p">,</span> <span class="mf">0.533</span><span class="p">,</span> <span class="mf">0.800</span><span class="p">,</span> <span class="mf">1.067</span><span class="p">,</span> <span class="mf">1.333</span><span class="p">,</span>
+<span class="linenos"> 6</span>    <span class="mf">1.600</span><span class="p">,</span> <span class="mf">1.867</span><span class="p">,</span> <span class="mf">2.133</span><span class="p">,</span> <span class="mf">2.400</span><span class="p">,</span> <span class="mf">2.667</span><span class="p">,</span>
+<span class="linenos"> 7</span>    <span class="mf">2.933</span><span class="p">,</span> <span class="mf">3.200</span><span class="p">,</span> <span class="mf">3.467</span><span class="p">,</span> <span class="mf">3.733</span><span class="p">,</span> <span class="mf">4.000</span><span class="p">,</span>
+<span class="linenos"> 8</span>    <span class="mf">4.267</span><span class="p">,</span> <span class="mf">4.533</span><span class="p">,</span> <span class="mf">4.800</span><span class="p">,</span> <span class="mf">5.067</span><span class="p">,</span> <span class="mf">5.333</span><span class="p">,</span>
+<span class="linenos"> 9</span>    <span class="mf">5.600</span><span class="p">,</span> <span class="mf">5.867</span><span class="p">,</span> <span class="mf">6.133</span><span class="p">,</span> <span class="mf">6.400</span><span class="p">,</span> <span class="mf">6.667</span><span class="p">,</span>
+<span class="linenos">10</span>    <span class="mf">6.933</span><span class="p">,</span> <span class="mf">7.200</span><span class="p">,</span> <span class="mf">7.467</span><span class="p">,</span> <span class="mf">7.733</span><span class="p">,</span> <span class="mf">8.000</span><span class="p">]</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.143</span><span class="p">,</span> <span class="mf">0.220</span><span class="p">,</span> <span class="mf">0.292</span><span class="p">,</span> <span class="mf">0.315</span><span class="p">,</span> <span class="mf">0.357</span><span class="p">,</span>
+<span class="linenos">13</span>    <span class="mf">0.577</span><span class="p">,</span> <span class="mf">0.625</span><span class="p">,</span> <span class="mf">0.661</span><span class="p">,</span> <span class="mf">0.619</span><span class="p">,</span> <span class="mf">0.756</span><span class="p">,</span>
+<span class="linenos">14</span>    <span class="mf">0.643</span><span class="p">,</span> <span class="mf">1.000</span><span class="p">,</span> <span class="mf">0.810</span><span class="p">,</span> <span class="mf">0.792</span><span class="p">,</span> <span class="mf">0.714</span><span class="p">,</span>
+<span class="linenos">15</span>    <span class="mf">0.726</span><span class="p">,</span> <span class="mf">0.589</span><span class="p">,</span> <span class="mf">0.381</span><span class="p">,</span> <span class="mf">0.369</span><span class="p">,</span> <span class="mf">0.238</span><span class="p">,</span>
+<span class="linenos">16</span>    <span class="mf">0.244</span><span class="p">,</span> <span class="mf">0.208</span><span class="p">,</span> <span class="mf">0.089</span><span class="p">,</span> <span class="mf">0.060</span><span class="p">,</span> <span class="mf">0.060</span><span class="p">,</span>
+<span class="linenos">17</span>    <span class="mf">0.060</span><span class="p">,</span> <span class="mf">0.030</span><span class="p">,</span> <span class="mf">0.018</span><span class="p">,</span> <span class="mf">0.012</span><span class="p">,</span> <span class="mf">0.000</span><span class="p">]</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="linenos">20</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span><span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="linenos">23</span>    <span class="k">return</span> <span class="n">A</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">27</span>    <span class="n">_param</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">gaussian</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="linenos">28</span>    <span class="n">new_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="linenos">29</span>    <span class="n">new_y</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="o">*</span><span class="n">_param</span><span class="p">)</span>
+<span class="linenos">30</span>
+<span class="linenos">31</span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;.k&#39;</span><span class="p">)</span>
+<span class="linenos">32</span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span><span class="p">,</span> <span class="s1">&#39;--r&#39;</span><span class="p">)</span>
+<span class="linenos">33</span>    <span class="n">txt</span> <span class="o">=</span> <span class="s2">&quot;A </span><span class="si">{:.2f}</span><span class="se">\n</span><span class="s2">$\mu$ </span><span class="si">{:.2f}</span><span class="se">\n</span><span class="s2">$\sigma$ </span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">_param</span><span class="p">)</span>
+<span class="linenos">34</span>    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">txt</span><span class="p">)</span>
+<span class="linenos">35</span>    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;EX4_gaussian.png&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="module-W110_Analysis_Data.EX5_peak">
+<span id="id6"></span><h2>피크 분석<a class="headerlink" href="#module-W110_Analysis_Data.EX5_peak" title="이 표제에 대한 퍼머링크">¶</a></h2>
+<img alt="../_images/EX5_peak.png" src="../_images/EX5_peak.png" />
+<p><a class="reference external" href="https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX5_peak.py">EX5_peak.py</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">randn</span>
+<span class="linenos"> 3</span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="linenos"> 4</span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="linenos"> 7</span>    <span class="c1"># 데이터를 합치는 함수</span>
+<span class="linenos"> 8</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+<span class="linenos"> 9</span>    <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+<span class="linenos">10</span>        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">arg</span><span class="p">)</span>
+<span class="linenos">11</span>    <span class="k">return</span> <span class="n">data</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos">14</span><span class="sd">Gaussian Fit: 중심점과 반치폭을 찾는다</span>
+<span class="linenos">15</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos">16</span><span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<span class="linenos">17</span>    <span class="k">return</span> <span class="n">A</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span><span class="c1"># 데이터 생성</span>
+<span class="linenos">20</span><span class="n">n</span> <span class="o">=</span> <span class="mi">80000</span><span class="p">;</span> <span class="n">chn</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="linenos">21</span><span class="n">back</span>  <span class="o">=</span> <span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="mi">50</span>
+<span class="linenos">22</span><span class="n">peak1</span> <span class="o">=</span> <span class="n">randn</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">50</span><span class="p">))</span><span class="o">*</span><span class="mf">1.5</span><span class="o">+</span><span class="mi">24</span>
+<span class="linenos">23</span><span class="n">peak2</span> <span class="o">=</span> <span class="n">randn</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">/</span><span class="mi">30</span><span class="p">))</span><span class="o">*</span><span class="mf">3.5</span><span class="o">+</span><span class="mi">60</span>
+<span class="linenos">24</span>
+<span class="linenos">25</span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="linenos">26</span>    <span class="n">data</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">back</span><span class="p">,</span> <span class="n">peak1</span><span class="p">,</span> <span class="n">peak2</span><span class="p">)</span>
+<span class="linenos">27</span>    <span class="c1"># 히스토그램 생성</span>
+<span class="linenos">28</span>    <span class="n">hist</span><span class="p">,</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">chn</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="linenos">29</span>    <span class="c1"># bins: 채널 수, range: 범위</span>
+<span class="linenos">30</span>    <span class="n">ch</span> <span class="o">=</span> <span class="n">ch</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>  <span class="c1"># 채널 보정</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos">33</span><span class="sd">    예상되는 구간 설정</span>
+<span class="linenos">34</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">35</span>    <span class="n">p1_ch</span><span class="p">,</span> <span class="n">p1_hist</span> <span class="o">=</span> <span class="n">ch</span><span class="p">[</span><span class="mi">20</span><span class="o">*</span><span class="mi">4</span><span class="p">:</span><span class="mi">30</span><span class="o">*</span><span class="mi">4</span><span class="p">],</span> <span class="n">hist</span><span class="p">[</span><span class="mi">20</span><span class="o">*</span><span class="mi">4</span><span class="p">:</span><span class="mi">30</span><span class="o">*</span><span class="mi">4</span><span class="p">]</span>
+<span class="linenos">36</span>    <span class="n">p2_ch</span><span class="p">,</span> <span class="n">p2_hist</span> <span class="o">=</span> <span class="n">ch</span><span class="p">[</span><span class="mi">50</span><span class="o">*</span><span class="mi">4</span><span class="p">:</span><span class="mi">70</span><span class="o">*</span><span class="mi">4</span><span class="p">],</span> <span class="n">hist</span><span class="p">[</span><span class="mi">50</span><span class="o">*</span><span class="mi">4</span><span class="p">:</span><span class="mi">70</span><span class="o">*</span><span class="mi">4</span><span class="p">]</span>
+<span class="linenos">37</span>
+<span class="linenos">38</span>    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">))</span>
+<span class="linenos">39</span>    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="linenos">40</span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="linenos">41</span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="linenos">42</span>    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;rawdata&quot;</span><span class="p">)</span>
+<span class="linenos">43</span>    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">p1_ch</span><span class="p">,</span> <span class="n">p1_hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Peak1&quot;</span><span class="p">)</span>
+<span class="linenos">44</span>    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">p2_ch</span><span class="p">,</span> <span class="n">p2_hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Peak2&quot;</span><span class="p">)</span>
+<span class="linenos">45</span>    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="linenos">46</span>
+<span class="linenos">47</span>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos">48</span><span class="sd">    Background 제거: Background를 1차함수로 가정한다.</span>
+<span class="linenos">49</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">50</span>    <span class="n">p1_bk_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">([</span><span class="n">p1_ch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p1_ch</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">p1_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p1_hist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="mi">1</span><span class="p">))</span>
+<span class="linenos">51</span>    <span class="n">p1_hist</span> <span class="o">=</span> <span class="n">p1_hist</span><span class="o">-</span><span class="n">p1_bk_fit</span><span class="p">(</span><span class="n">p1_ch</span><span class="p">)</span>
+<span class="linenos">52</span>    <span class="n">p2_bk_fit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">([</span><span class="n">p2_ch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p2_ch</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">p2_hist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p2_hist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="mi">1</span><span class="p">))</span>
+<span class="linenos">53</span>    <span class="n">p2_hist</span> <span class="o">=</span> <span class="n">p2_hist</span><span class="o">-</span><span class="n">p2_bk_fit</span><span class="p">(</span><span class="n">p2_ch</span><span class="p">)</span>
+<span class="linenos">54</span>
+<span class="linenos">55</span>    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="linenos">56</span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="linenos">57</span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="linenos">58</span>    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">p1_ch</span><span class="p">,</span> <span class="n">p1_hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Peak1&quot;</span><span class="p">)</span>
+<span class="linenos">59</span>    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">p2_ch</span><span class="p">,</span> <span class="n">p2_hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Peak2&quot;</span><span class="p">)</span>
+<span class="linenos">60</span>    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="linenos">61</span>
+<span class="linenos">62</span>
+<span class="linenos">63</span>    <span class="n">_param1</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">gaussian</span><span class="p">,</span> <span class="n">p1_ch</span><span class="p">,</span> <span class="n">p1_hist</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="linenos">64</span>    <span class="n">_param2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">gaussian</span><span class="p">,</span> <span class="n">p2_ch</span><span class="p">,</span> <span class="n">p2_hist</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="linenos">65</span>
+<span class="linenos">66</span>    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="linenos">67</span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="linenos">68</span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="linenos">69</span>    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">p1_ch</span><span class="p">,</span> <span class="n">p1_hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="linenos">70</span>    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">p2_ch</span><span class="p">,</span> <span class="n">p2_hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="linenos">71</span>    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p1_ch</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">p1_ch</span><span class="p">,</span> <span class="o">*</span><span class="n">_param1</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Peak1&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="linenos">72</span>    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p2_ch</span><span class="p">,</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">p2_ch</span><span class="p">,</span> <span class="o">*</span><span class="n">_param2</span><span class="p">),</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Peak2&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="linenos">73</span>    <span class="n">p1_tx</span> <span class="o">=</span> <span class="s2">&quot;$\mu$ </span><span class="si">{:.2f}</span><span class="se">\n</span><span class="s2">FWHM </span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_param1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_param1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mf">2.3548</span><span class="p">)</span>
+<span class="linenos">74</span>    <span class="n">p2_tx</span> <span class="o">=</span> <span class="s2">&quot;$\mu$ </span><span class="si">{:.2f}</span><span class="se">\n</span><span class="s2">FWHM </span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_param2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_param2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mf">2.3548</span><span class="p">)</span>
+<span class="linenos">75</span>    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">_param1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">200</span><span class="p">,</span> <span class="n">p1_tx</span><span class="p">)</span>
+<span class="linenos">76</span>    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">_param2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">200</span><span class="p">,</span> <span class="n">p2_tx</span><span class="p">)</span>
+<span class="linenos">77</span>    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="linenos">78</span>
+<span class="linenos">79</span>    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;EX5_peak.png&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, soma0sd.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/W110_Analysis_Data/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
