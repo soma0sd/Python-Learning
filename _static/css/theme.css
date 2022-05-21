@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'Fira Code';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("./fonts/FiraCode-Regular.ttf");
+}
+@font-face {
+    font-family: 'Fira Code';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("./fonts/FiraCode-Bold.ttf");
+}
+@font-face {
+    font-family: 'Nanum Gothic Coding';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("./fonts/NanumGothicCoding-Regular.ttf");
+}
+@font-face {
+    font-family: 'Nanum Gothic Coding';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("./fonts/NanumGothicCoding-Bold.ttf");
+}
+@font-face {
+    font-family: 'Nanum Gothic';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("./fonts/NanumGothic-Regular.ttf");
+}
+@font-face {
+    font-family: 'Nanum Gothic';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("./fonts/NanumGothic-Bold.ttf");
+}
+
+
+body, div.body h1, div.body h2, div.body h3, div.body h4, div.body h5, div.body h6 {
+    font-family:"Nanum Gothic", sans-serif;
+}
+
+pre, tt, code {
+    font-family:"Fira Code", "Nanum Gothic Coding", monospace;
+}
