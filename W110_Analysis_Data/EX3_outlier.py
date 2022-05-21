@@ -3,7 +3,7 @@
 
 `EX3_outlier.py <EX3_>`_
 
-.. _EX3: https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX3_outlier.py
+.. _EX3: https://github.com/soma0sd/Python-Learning/blob/main/W110_Analysis_Data/EX3_outlier.py
 
 .. literalinclude:: EX3_outlier.py
    :language: python

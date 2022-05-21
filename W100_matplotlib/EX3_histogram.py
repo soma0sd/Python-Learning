@@ -11,6 +11,8 @@
    :linenos:
    :lines: 1-3
 
+데이터 값 구간별로 도수를 세고 이것을 히스토그램으로 그립니다.
+
 .. _EX3_DATA: https://github.com/soma0sd/Python-Learning/blob/main/W101_Plotting_Data/hist_data.csv
 
 `EX3_histogram.py <EX3_>`_
@@ -20,7 +22,7 @@
 .. literalinclude:: EX3_histogram.py
    :language: python
    :linenos:
-   :lines: 28-
+   :lines: 30-
 
 .. image:: EX3_histogram.png
 

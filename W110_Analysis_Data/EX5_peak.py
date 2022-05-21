@@ -3,7 +3,7 @@
 
 `EX5_peak.py <EX5_>`_
 
-.. _EX5: https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX5_peak.py
+.. _EX5: https://github.com/soma0sd/Python-Learning/blob/main/W110_Analysis_Data/EX5_peak.py
 
 .. literalinclude:: EX5_peak.py
    :language: python

@@ -9,7 +9,7 @@
 
 `EX2_overfit.py <EX2_>`_
 
-.. _EX2: https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX2_overfit.py
+.. _EX2: https://github.com/soma0sd/Python-Learning/blob/main/W110_Analysis_Data/EX2_overfit.py
 
 .. literalinclude:: EX2_overfit.py
    :language: python

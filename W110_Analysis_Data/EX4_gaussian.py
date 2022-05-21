@@ -3,7 +3,7 @@
 
 `EX4_gaussian.py <EX4_>`_
 
-.. _EX4: https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX4_gaussian.py
+.. _EX4: https://github.com/soma0sd/Python-Learning/blob/main/W110_Analysis_Data/EX4_gaussian.py
 
 .. literalinclude:: EX4_gaussian.py
    :language: python

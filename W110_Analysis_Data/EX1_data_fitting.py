@@ -13,7 +13,7 @@
 
 `EX1_data_fitting.py <EX1_>`_
 
-.. _EX1: https://github.com/soma0sd/Python-Learning/blob/main/W102_Analysis_Data/EX1_data_fitting.py
+.. _EX1: https://github.com/soma0sd/Python-Learning/blob/main/W110_Analysis_Data/EX1_data_fitting.py
 
 .. literalinclude:: EX1_data_fitting.py
    :language: python
