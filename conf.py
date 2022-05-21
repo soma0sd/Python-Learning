@@ -49,8 +49,14 @@ language = 'ko'
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [
+    "_*/*",
+    "_*/**/*",
+    ".*/*",
+    ".*/**/*",
     "docs/*",
-    ".pyenv/"
+    "docs/**/*.*",
+    "README.md",
+    "*/README.md",
 ]
 
 # -- Options for HTML output -------------------------------------------------

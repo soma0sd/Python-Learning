@@ -1,4 +1,5 @@
 .token
+.vscode/*.log
 
 # Python ENV
 .pyenv/
@@ -7,5 +8,6 @@
 __pycache__/
 
 # builds
+_build/
 docs/html
 docs/doctrees

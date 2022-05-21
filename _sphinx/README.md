@@ -52,7 +52,7 @@ sphinx-quickstart
 make html
 ```
 
-빌드한 내용은 `_build/html` 혹은 `build/html`에 위치합니다. [sphinx-reload](#sphinx-reload)도구를 사용하여 빌드과정을 자동화 할 수 있습니다.
+빌드한 내용은 `_build/html` 혹은 `build/html`에 위치합니다. `sphinx-reload`도구를 사용하여 빌드과정을 자동화 할 수 있습니다.
 
 ## 기본 파일 시스템
 

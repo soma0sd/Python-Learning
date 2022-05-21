@@ -6,7 +6,8 @@
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = ./
-BUILDDIR      = docs/
+BUILDDIR      = _build/
+DOCSDIR       = docs/
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -21,7 +22,7 @@ start:
 install:
 	make clean
 	make html
-	rsync -a $(BUILDDIR)html/ $(BUILDDIR)
+	rsync -a $(BUILDDIR)html/ $(DOCSDIR)
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).

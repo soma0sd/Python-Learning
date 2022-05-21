@@ -11,7 +11,6 @@
 저장소의 디렉토리별 분류 코드입니다.
 
 - W000: 파이썬 기본
-- W100: matplotlib
-- W200: tkinter
-- W300: Jupyter Notebook
+- W100: 데이터 시각화: matplotlib
+- W200: 그래픽 유저 인터페이스: tkinter
 - W999: 기타
